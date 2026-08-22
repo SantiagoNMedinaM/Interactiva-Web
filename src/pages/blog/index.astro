@@ -1,0 +1,71 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import { getAllPosts } from '../../lib/wordpress.js'
+
+const posts = await getAllPosts()
+
+function formatDate(dateStr: string) {
+  return new Date(dateStr).toLocaleDateString('es-AR', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+  })
+}
+
+function getCategory(post: any): string {
+  const terms = post._embedded?.['wp:term']
+  if (terms && terms[0]?.length > 0) return terms[0][0].name
+  return 'Blog'
+}
+
+function getFeaturedImage(post: any) {
+  return post._embedded?.['wp:featuredmedia']?.[0]
+}
+
+const gradients = ['t1', 't2', 't3']
+const fallbackEmojis = ['📰', '💡', '🚀', '📊', '🎯', '🤝']
+---
+
+<Layout
+  title="Blog — Interactiva"
+  description="Ideas, tendencias y recursos sobre gestión de capital humano y selección de personal."
+>
+  <div class="page-hero">
+    <div class="page-hero-inner">
+      <div class="s-eyebrow white">Blog y contenidos</div>
+      <h1 class="s-title white">Ideas para la gestión<br />de personas.</h1>
+      <p class="s-body white">Tendencias, recursos y casos prácticos para equipos de RRHH y líderes de organizaciones.</p>
+    </div>
+  </div>
+
+  <section class="section-wrap">
+    <div class="section-inner">
+      {posts.length > 0 ? (
+        <div class="blog-page-grid">
+          {posts.map((post: any, i: number) => {
+            const img = getFeaturedImage(post)
+            return (
+              <a href={`/blog/${post.slug}`} class="blog-card">
+                <div class={`blog-thumb ${gradients[i % 3]}`}>
+                  {img
+                    ? <img src={img.source_url} alt={img.alt_text || post.title.rendered} loading="lazy" />
+                    : <span aria-hidden="true">{fallbackEmojis[i % fallbackEmojis.length]}</span>
+                  }
+                </div>
+                <div class="blog-body">
+                  <div class="blog-cat">{getCategory(post)}</div>
+                  <div class="blog-ttl" set:html={post.title.rendered} />
+                  <div class="blog-date">{formatDate(post.date)}</div>
+                </div>
+              </a>
+            )
+          })}
+        </div>
+      ) : (
+        <p style="color:var(--muted);text-align:center;padding:40px 0;">
+          No hay entradas publicadas todavía.
+        </p>
+      )}
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,70 @@
+---
+interface Job {
+  id: number | string
+  title: string
+  location: string
+  type: string
+  badge: string
+  url: string
+}
+
+interface Props {
+  jobs: Job[]
+}
+
+const { jobs } = Astro.props
+
+function badgeClass(badge: string) {
+  const map: Record<string, string> = {
+    'Nuevo': 'new',
+    'Urgente': 'urgent',
+    'Activo': 'active',
+  }
+  return map[badge] ?? 'new'
+}
+
+function dotClass(badge: string) {
+  const map: Record<string, string> = {
+    'Urgente': 'urgent',
+    'Activo': 'active',
+  }
+  return map[badge] ?? ''
+}
+---
+
+<section class="section-wrap bg-light" id="oportunidades">
+  <div class="section-inner">
+    <div class="jobs-header">
+      <div>
+        <div class="s-eyebrow">Oportunidades laborales</div>
+        <h2 class="s-title" style="font-size:32px;margin-bottom:0;">Últimas búsquedas activas</h2>
+      </div>
+      <a href="https://www.micurriculum.com.ar/avisos-laborales" target="_blank" rel="noopener noreferrer" class="jobs-link">
+        Ver todas en MiCurriculum →
+      </a>
+    </div>
+
+    <div class="jobs-grid">
+      {jobs.map(job => (
+        <div class="job-card">
+          <div class={`job-dot ${dotClass(job.badge)}`}></div>
+          <div class="job-info">
+            <div class="job-title">{job.title}</div>
+            <div class="job-meta">{job.location} · {job.type}</div>
+          </div>
+          <span class={`job-badge ${badgeClass(job.badge)}`}>{job.badge}</span>
+          <a href={job.url} target="_blank" rel="noopener noreferrer" class="job-cta">
+            Ver búsqueda →
+          </a>
+        </div>
+      ))}
+    </div>
+
+    <p class="jobs-footer-note">
+      ¿Buscás trabajo? Postulate en{' '}
+      <a href="https://www.micurriculum.com.ar" target="_blank" rel="noopener noreferrer">
+        MiCurriculum.com.ar
+      </a>{' '}→
+    </p>
+  </div>
+</section>

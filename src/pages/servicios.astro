@@ -1,0 +1,25 @@
+---
+import Layout from '../layouts/Layout.astro'
+import Services from '../components/sections/Services.astro'
+import WhenWeHelp from '../components/sections/WhenWeHelp.astro'
+import ContactForm from '../components/sections/ContactForm.astro'
+---
+
+<Layout
+  title="Servicios — Interactiva"
+  description="Atracción de talento, consultoría en capital humano y módulos on demand. Soluciones para cada necesidad de tu organización."
+>
+  <div class="page-hero">
+    <div class="page-hero-inner">
+      <div class="s-eyebrow white">Servicios / Soluciones</div>
+      <h1 class="s-title white">Todo lo que podemos<br />hacer por tu organización.</h1>
+      <p class="s-body white">
+        Desde búsquedas de personal hasta consultoría integral, adaptamos cada solución
+        al tamaño y realidad de tu empresa.
+      </p>
+    </div>
+  </div>
+  <Services />
+  <WhenWeHelp />
+  <ContactForm />
+</Layout>

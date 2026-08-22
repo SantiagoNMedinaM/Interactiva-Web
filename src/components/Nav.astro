@@ -1,0 +1,82 @@
+---
+const WA = import.meta.env.PUBLIC_WHATSAPP
+const waUrl = `https://wa.me/${WA}`
+
+const links = [
+  { href: '/#por-que-interactiva', label: 'Por qué Interactiva' },
+  { href: '/servicios', label: 'Servicios' },
+  { href: '/#cuando-ayudamos', label: '¿Cuándo te ayudamos?' },
+  { href: '/blog', label: 'Blog' },
+  { href: 'https://www.micurriculum.com.ar', label: 'Oportunidades', external: true },
+]
+
+const currentPath = Astro.url.pathname
+---
+
+<nav>
+  <a href="/" class="nav-logo" aria-label="Interactiva — inicio">
+    <div class="nav-logo-icon" aria-hidden="true">
+      <svg width="18" height="20" viewBox="0 0 18 20" fill="none">
+        <circle cx="9" cy="3" r="3" fill="white"/>
+        <rect x="1" y="8" width="7" height="12" rx="2" fill="white" opacity=".9"/>
+        <rect x="10" y="11" width="7" height="9" rx="2" fill="white" opacity=".7"/>
+      </svg>
+    </div>
+    <span class="nav-logo-txt">interactiva</span>
+  </a>
+
+  <div class="nav-links" role="navigation" aria-label="Menú principal">
+    {links.map(link => (
+      <a
+        href={link.href}
+        {...(link.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+        class={currentPath === link.href ? 'active' : ''}
+      >
+        {link.label}
+      </a>
+    ))}
+  </div>
+
+  <a href="/contacto" class="nav-cta">Soy empresa →</a>
+
+  <button
+    class="nav-hamburger"
+    aria-label="Abrir menú"
+    aria-expanded="false"
+    aria-controls="nav-mobile"
+    id="nav-toggle"
+  >
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</nav>
+
+<div class="nav-mobile" id="nav-mobile" role="navigation" aria-label="Menú móvil">
+  {links.map(link => (
+    <a
+      href={link.href}
+      {...(link.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+    >
+      {link.label}
+    </a>
+  ))}
+  <a href="/contacto" class="nav-cta">Soy empresa →</a>
+</div>
+
+<script>
+  const toggle = document.getElementById('nav-toggle')
+  const menu = document.getElementById('nav-mobile')
+
+  toggle?.addEventListener('click', () => {
+    const isOpen = menu?.classList.toggle('open')
+    toggle.setAttribute('aria-expanded', String(isOpen))
+  })
+
+  document.addEventListener('click', (e) => {
+    if (!toggle?.contains(e.target as Node) && !menu?.contains(e.target as Node)) {
+      menu?.classList.remove('open')
+      toggle?.setAttribute('aria-expanded', 'false')
+    }
+  })
+</script>

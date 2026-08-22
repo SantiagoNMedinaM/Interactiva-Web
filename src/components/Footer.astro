@@ -1,0 +1,50 @@
+---
+const year = new Date().getFullYear()
+const WA = import.meta.env.PUBLIC_WHATSAPP
+const waUrl = `https://wa.me/${WA}`
+---
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand-name">interactiva</div>
+        <p class="footer-desc">
+          Consultoría y Gestión de Capital Humano. Más de 20 años acompañando
+          empresas y organizaciones en la región.
+        </p>
+        <div class="footer-social">
+          <a href="https://www.linkedin.com/company/interactiva" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="LinkedIn">in</a>
+          <a href="#" class="social-icon" aria-label="Facebook">fb</a>
+          <a href="#" class="social-icon" aria-label="Instagram">ig</a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Servicios</h4>
+        <a href="/servicios#atraccion">Atracción de talento</a>
+        <a href="/servicios#consultoria">Consultoría en RRHH</a>
+        <a href="/servicios#ondemand">Módulos On Demand</a>
+      </div>
+
+      <div class="footer-col">
+        <h4>Empresa</h4>
+        <a href="/#por-que-interactiva">Por qué Interactiva</a>
+        <a href="/blog">Blog</a>
+        <a href="/#recursos">Centro de Recursos</a>
+        <a href="https://www.micurriculum.com.ar" target="_blank" rel="noopener noreferrer">Oportunidades laborales</a>
+      </div>
+
+      <div class="footer-col">
+        <h4>Contacto</h4>
+        <a href="mailto:info@interactiva.com.ar">info@interactiva.com.ar</a>
+        <a href={waUrl} target="_blank" rel="noopener noreferrer">WhatsApp</a>
+        <a href="/contacto">Formulario de consulta</a>
+      </div>
+    </div>
+s
+    <div class="footer-bottom">
+      <p>© {year} Interactiva – Consultoría y Gestión de RRHH</p>
+    </div>
+  </div>
+</footer>

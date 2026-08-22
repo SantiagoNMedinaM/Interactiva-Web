@@ -1,0 +1,74 @@
+---
+interface Post {
+  id: number
+  slug: string
+  title: { rendered: string }
+  date: string
+  _embedded?: {
+    'wp:featuredmedia'?: Array<{ source_url: string; alt_text: string }>
+    'wp:term'?: Array<Array<{ name: string }>>
+  }
+}
+
+interface Props {
+  posts: Post[]
+}
+
+const { posts } = Astro.props
+
+const gradients = ['t1', 't2', 't3']
+const fallbackEmojis = ['📰', '💡', '🚀']
+
+function formatDate(dateStr: string) {
+  return new Date(dateStr).toLocaleDateString('es-AR', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+  })
+}
+
+function getCategory(post: Post): string {
+  const terms = post._embedded?.['wp:term']
+  if (terms && terms[0]?.length > 0) return terms[0][0].name
+  return 'Blog'
+}
+
+function getFeaturedImage(post: Post) {
+  return post._embedded?.['wp:featuredmedia']?.[0]
+}
+---
+
+<section class="section-wrap" id="blog">
+  <div class="section-inner">
+    <div class="two-col-header">
+      <div>
+        <div class="s-eyebrow">Blog y contenidos</div>
+        <h2 class="s-title">Ideas y recursos para la gestión de personas.</h2>
+      </div>
+      <a href="/blog" class="blog-header-link">Ver todas las notas →</a>
+    </div>
+
+    <div class="blog-grid" style={posts.length === 1 ? 'grid-template-columns:1fr;max-width:380px;' : posts.length === 2 ? 'grid-template-columns:repeat(2,1fr);' : ''}>
+      {posts.length > 0 ? posts.map((post, i) => {
+        const img = getFeaturedImage(post)
+        return (
+          <a href={`/blog/${post.slug}`} class="blog-card">
+            <div class={`blog-thumb ${gradients[i % 3]}`}>
+              {img
+                ? <img src={img.source_url} alt={img.alt_text || post.title.rendered} loading="lazy" />
+                : <span aria-hidden="true">{fallbackEmojis[i % 3]}</span>
+              }
+            </div>
+            <div class="blog-body">
+              <div class="blog-cat">{getCategory(post)}</div>
+              <div class="blog-ttl" set:html={post.title.rendered} />
+              <div class="blog-date">{formatDate(post.date)}</div>
+            </div>
+          </a>
+        )
+      }) : (
+        <p style="color:var(--muted);grid-column:1/-1;">No hay entradas publicadas todavía.</p>
+      )}
+    </div>
+  </div>
+</section>

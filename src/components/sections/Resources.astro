@@ -1,0 +1,44 @@
+---
+const recursos = [
+  {
+    icon: '📋',
+    title: 'Modelo de descripción de perfil / puesto',
+    body: 'Definí correctamente el perfil antes de iniciar una búsqueda y mejorá los resultados.',
+    href: '#'
+  },
+  {
+    icon: '🎤',
+    title: 'Guía para entrevistas por competencias',
+    body: 'Estructura tus entrevistas y evaluá candidatos de forma más objetiva y efectiva.',
+    href: '#'
+  },
+  {
+    icon: '✅',
+    title: 'Checklist de incorporación de personal',
+    body: 'Asegurate de cubrir todos los pasos clave en el proceso de ingreso de un colaborador.',
+    href: '#'
+  },
+]
+---
+
+<section class="section-wrap bg-light" id="recursos">
+  <div class="section-inner">
+    <div class="two-col-header">
+      <div>
+        <div class="s-eyebrow">Centro de Recursos</div>
+        <h2 class="s-title">Herramientas para tu gestión de personas.</h2>
+      </div>
+      <p class="s-body">Recursos prácticos y descargables para empresas y organizaciones. Gratis, sin compromiso.</p>
+    </div>
+    <div class="recursos-grid">
+      {recursos.map(r => (
+        <div class="recurso-card">
+          <div class="recurso-icon">{r.icon}</div>
+          <h3>{r.title}</h3>
+          <p>{r.body}</p>
+          <a href={r.href} class="recurso-btn">Descargar gratis →</a>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

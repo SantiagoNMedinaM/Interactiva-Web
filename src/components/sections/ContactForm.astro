@@ -1,0 +1,136 @@
+---
+const WA = import.meta.env.PUBLIC_WHATSAPP
+const waUrl = `https://wa.me/${WA}`
+const formspreeEndpoint = import.meta.env.PUBLIC_FORMSPREE_ENDPOINT
+
+const motivos = [
+  'Búsqueda de personal',
+  'Consultoría RRHH',
+  'Módulo On Demand',
+  'Otro',
+]
+---
+
+<section class="cta-section" id="contacto">
+  <div class="cta-inner">
+    <div>
+      <h2 class="cta-title">¿Tenés una necesidad de capital humano?</h2>
+      <p class="cta-body">
+        Contanos tu situación. Analizamos la necesidad y te proponemos la solución más adecuada
+        para tu organización.
+      </p>
+    </div>
+
+    <div class="cta-form">
+      <h3>Consultar ahora</h3>
+      <form class="form-fields" id="contact-form" action={formspreeEndpoint} method="POST">
+        <div class="form-grid">
+          <input class="form-input" name="nombre" placeholder="Nombre" type="text" required />
+          <input class="form-input" name="empresa" placeholder="Empresa / Organización" type="text" required />
+        </div>
+        <div class="form-grid">
+          <input class="form-input" name="cargo" placeholder="Cargo" type="text" />
+          <input class="form-input" name="email" placeholder="Email" type="email" required />
+        </div>
+        <input class="form-input" name="telefono" placeholder="Teléfono" type="tel" />
+        <select class="form-select" name="motivo">
+          <option value="" disabled selected>Motivo de consulta</option>
+          {motivos.map(m => <option value={m}>{m}</option>)}
+        </select>
+        <textarea class="form-textarea" name="mensaje" placeholder="Contanos tu necesidad..."></textarea>
+        <button class="form-submit" type="submit">Enviar consulta</button>
+
+        <div class="form-wa">
+          Canal exclusivo para empresas ·{' '}
+          <a href={waUrl} target="_blank" rel="noopener noreferrer">Consultar por WhatsApp</a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="toast" id="form-toast" role="status" aria-live="polite"></div>
+</section>
+
+<style>
+  .toast {
+    position: fixed;
+    left: 50%;
+    bottom: 2rem;
+    transform: translate(-50%, 1rem);
+    z-index: 100;
+    padding: 0.9rem 1.5rem;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--white);
+    background: var(--navy);
+    box-shadow: 0 8px 24px rgba(15, 28, 46, 0.25);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+  .toast.show {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+  .toast.success {
+    background: var(--green);
+  }
+  .toast.error {
+    background: var(--orange-dark);
+  }
+
+  @media (max-width: 640px) {
+    .toast {
+      left: 1rem;
+      right: 1rem;
+      bottom: 1rem;
+      transform: translateY(1rem);
+    }
+    .toast.show {
+      transform: translateY(0);
+    }
+  }
+</style>
+
+<script>
+  const form = document.getElementById('contact-form') as HTMLFormElement | null
+  const toast = document.getElementById('form-toast') as HTMLDivElement | null
+  let hideTimeout: ReturnType<typeof setTimeout> | undefined
+
+  function showToast(message: string, variant: 'success' | 'error') {
+    if (!toast) return
+    clearTimeout(hideTimeout)
+    toast.textContent = message
+    toast.className = `toast show ${variant}`
+    hideTimeout = setTimeout(() => {
+      toast.className = 'toast'
+    }, 5000)
+  }
+
+  form?.addEventListener('submit', async (event) => {
+    event.preventDefault()
+
+    const submitButton = form.querySelector('button[type="submit"]') as HTMLButtonElement | null
+    if (submitButton) submitButton.disabled = true
+
+    try {
+      const response = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { Accept: 'application/json' },
+      })
+
+      if (response.ok) {
+        form.reset()
+        showToast('¡Consulta enviada! Te vamos a contactar a la brevedad.', 'success')
+      } else {
+        showToast('No pudimos enviar tu consulta. Probá de nuevo o escribinos por WhatsApp.', 'error')
+      }
+    } catch {
+      showToast('No pudimos enviar tu consulta. Probá de nuevo o escribinos por WhatsApp.', 'error')
+    } finally {
+      if (submitButton) submitButton.disabled = false
+    }
+  })
+</script>

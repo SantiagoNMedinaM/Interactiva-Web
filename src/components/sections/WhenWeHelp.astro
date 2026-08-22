@@ -1,0 +1,39 @@
+---
+const situaciones = [
+  'Necesitás incorporar una persona clave y no encontrás el perfil adecuado.',
+  'Querés realizar una búsqueda especializada o confidencial.',
+  'Necesitás ordenar o mejorar algún proceso de gestión de personas.',
+  'Querés definir mejor un perfil o puesto antes de iniciar una búsqueda.',
+  'Tenés una necesidad puntual y querés contratar solo una parte del proceso.',
+  'Buscás orientación para encontrar la solución de capital humano más adecuada.',
+]
+---
+
+<section class="section-wrap bg-navy" id="cuando-ayudamos">
+  <div class="section-inner">
+    <div class="two-col-header">
+      <div>
+        <div class="s-eyebrow white">¿Cuándo podemos ayudarte?</div>
+        <h2 class="s-title white">Situaciones reales<br />que reconocés.</h2>
+      </div>
+      <p class="s-body white">
+        No hace falta saber exactamente qué servicio necesitás. Contanos tu situación y
+        encontramos la mejor solución.
+      </p>
+    </div>
+
+    <div class="cuando-grid">
+      {situaciones.map((s, i) => (
+        <div class="cuando-card">
+          <div class="cuando-card-num">{String(i + 1).padStart(2, '0')}</div>
+          <p>{s}</p>
+        </div>
+      ))}
+    </div>
+
+    <div class="cuando-close">
+      <p>"Contanos tu situación. Analizamos la necesidad y vemos la mejor solución."</p>
+      <a href="/contacto" class="cuando-cta">Consultar ahora →</a>
+    </div>
+  </div>
+</section>

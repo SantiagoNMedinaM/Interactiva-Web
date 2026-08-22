@@ -1,0 +1,70 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import { getAllPosts, getPostBySlug } from '../../lib/wordpress.js'
+
+export async function getStaticPaths() {
+  const posts = await getAllPosts()
+  return posts.map((post: any) => ({
+    params: { slug: post.slug },
+  }))
+}
+
+const { slug } = Astro.params
+const post = await getPostBySlug(slug as string)
+
+if (!post) {
+  return Astro.redirect('/blog')
+}
+
+function formatDate(dateStr: string) {
+  return new Date(dateStr).toLocaleDateString('es-AR', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  })
+}
+
+function getCategory(p: any): string {
+  const terms = p._embedded?.['wp:term']
+  if (terms && terms[0]?.length > 0) return terms[0][0].name
+  return 'Blog'
+}
+
+const featuredImg = post._embedded?.['wp:featuredmedia']?.[0]
+const author = post._embedded?.author?.[0]
+const description = post.excerpt?.rendered
+  ? post.excerpt.rendered.replace(/<[^>]+>/g, '').slice(0, 160)
+  : `Leé "${post.title.rendered}" en el blog de Interactiva.`
+---
+
+<Layout title={`${post.title.rendered} — Blog Interactiva`} description={description}>
+  <div class="page-hero" style="padding:56px 48px 48px;">
+    <div class="page-hero-inner">
+      <div class="s-eyebrow white">{getCategory(post)}</div>
+      <h1 class="s-title white" style="font-size:48px;" set:html={post.title.rendered} />
+      <div style="display:flex;gap:16px;align-items:center;margin-top:16px;font-size:13px;color:rgba(255,255,255,0.45);">
+        {author && <span>{author.name}</span>}
+        <span>{formatDate(post.date)}</span>
+      </div>
+    </div>
+  </div>
+
+  {featuredImg && (
+    <div style="max-width:820px;margin:0 auto;padding:0 48px;">
+      <img
+        src={featuredImg.source_url}
+        alt={featuredImg.alt_text || post.title.rendered}
+        style="width:100%;border-radius:16px;margin-top:-32px;box-shadow:0 8px 32px rgba(15,28,46,0.15);"
+        loading="eager"
+      />
+    </div>
+  )}
+
+  <div class="post-content">
+    <div set:html={post.content.rendered} />
+  </div>
+
+  <div style="max-width:720px;margin:0 auto;padding:0 48px 56px;border-top:1px solid var(--border);padding-top:32px;">
+    <a href="/blog" style="font-size:13px;color:var(--orange);font-weight:600;text-decoration:none;">← Volver al blog</a>
+  </div>
+</Layout>

@@ -1,0 +1,50 @@
+---
+const steps = [
+  {
+    title: 'Creá tu CV',
+    body: 'Seguí nuestras recomendaciones para armar un perfil completo y atractivo.',
+  },
+  {
+    title: 'Explorá búsquedas',
+    body: 'Revisá las oportunidades laborales activas publicadas por Interactiva.',
+  },
+  {
+    title: 'Postulate',
+    body: 'Enviá tu postulación directamente desde la plataforma con un clic.',
+  },
+  {
+    title: 'Te contactamos',
+    body: 'Si tu perfil encaja, nuestro equipo se pone en contacto con vos.',
+  },
+]
+---
+
+<section class="mc-section">
+  <div class="mc-inner">
+    <div>
+      <div class="mc-badge">Ecosistema digital</div>
+      <h2 class="s-title white">MiCurriculum,<br />nuestra plataforma propia.</h2>
+      <p class="s-body white" style="margin-bottom:24px;">
+        Contamos con una plataforma propia donde los postulantes pueden crear su CV,
+        seguir nuestras recomendaciones y postularse a las oportunidades laborales disponibles.
+      </p>
+      <a href="https://www.micurriculum.com.ar" target="_blank" rel="noopener noreferrer" class="mc-btn">
+        Ir a MiCurriculum →
+      </a>
+    </div>
+
+    <div class="mc-card">
+      <div class="mc-card-steps">
+        {steps.map((step, i) => (
+          <div class="mc-step">
+            <div class="mc-step-num">{i + 1}</div>
+            <div class="mc-step-text">
+              <strong>{step.title}</strong>
+              <span>{step.body}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

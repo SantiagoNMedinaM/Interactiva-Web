@@ -1,0 +1,60 @@
+---
+const diferenciales = [
+  {
+    icon: '🏆',
+    title: 'Experiencia comprobada',
+    body: 'Más de 20 años en consultoría y gestión de capital humano con resultados concretos y medibles.'
+  },
+  {
+    icon: '🤝',
+    title: 'Cercanía y flexibilidad',
+    body: 'Nos adaptamos al tamaño y realidad de cada organización. Entendemos la necesidad antes de proponer.'
+  },
+  {
+    icon: '📍',
+    title: 'Conocimiento regional',
+    body: 'Conocemos el tejido empresarial de la región. Eso nos permite encontrar el talento adecuado más rápido.'
+  },
+  {
+    icon: '🎯',
+    title: 'Enfoque en resultados',
+    body: 'Acompañamos todo el proceso, desde la identificación de la necesidad hasta la incorporación efectiva.'
+  },
+  {
+    icon: '🔒',
+    title: 'Confidencialidad',
+    body: 'Manejamos cada búsqueda con la discreción que cada proceso requiere, protegiendo a empresas y candidatos.'
+  },
+  {
+    icon: '⚡',
+    title: 'Agilidad operativa',
+    body: 'Procesos ágiles y comunicación directa. Sin burocracia innecesaria que frene tu búsqueda.'
+  },
+]
+---
+
+<section class="section-wrap bg-light" id="por-que-interactiva">
+  <div class="section-inner">
+    <div class="two-col-header">
+      <div>
+        <div class="s-eyebrow">Por qué Interactiva</div>
+        <h2 class="s-title">Raíces locales,<br />visión regional.</h2>
+      </div>
+      <p class="s-body">
+        Con más de 20 años acompañando a empresas y organizaciones, entendemos el contexto
+        empresarial de la región y proponemos soluciones prácticas y flexibles adaptadas a
+        cada realidad.
+      </p>
+    </div>
+    <div class="why-grid">
+      {diferenciales.map(d => (
+        <div class="why-card">
+          <div class="why-card-accent"></div>
+          <div class="why-card-icon">{d.icon}</div>
+          <h3>{d.title}</h3>
+          <p>{d.body}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

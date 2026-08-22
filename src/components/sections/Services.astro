@@ -1,0 +1,67 @@
+---
+const modules = [
+  'Diseño de perfil del puesto',
+  'Reclutamiento y preselección',
+  'Verificación de referencias',
+  'Exámenes preocupacionales',
+  'Coordinación de ingreso',
+  'Encuestas de egreso',
+  'Acompañamiento al ingreso',
+]
+---
+
+<section class="section-wrap" id="servicios">
+  <div class="section-inner">
+    <div class="two-col-header">
+      <div>
+        <div class="s-eyebrow">Servicios / Soluciones</div>
+        <h2 class="s-title">Soluciones para cada necesidad de tu organización.</h2>
+      </div>
+      <p class="s-body">
+        Organizamos nuestra oferta por necesidades reales del cliente, no por una lista genérica
+        de servicios.
+      </p>
+    </div>
+
+    <div class="services-grid">
+      <div class="service-card featured" id="atraccion">
+        <div class="service-badge navy">Principal</div>
+        <h3>Atracción de talento</h3>
+        <p>"Encontramos y acercamos el talento que tu organización necesita."</p>
+        <ul class="service-list">
+          <li>Búsqueda y selección de personal</li>
+          <li>Headhunting / reclutamiento especializado</li>
+          <li>Evaluación integral de candidatos</li>
+          <li>Búsquedas confidenciales</li>
+        </ul>
+      </div>
+
+      <div class="service-card" id="consultoria">
+        <div class="service-badge orange">Consultoría</div>
+        <h3>Consultoría en capital humano</h3>
+        <p>"Te ayudamos a ordenar, mejorar y profesionalizar la gestión de personas."</p>
+        <ul class="service-list">
+          <li>Asesoramiento en gestión de RRHH</li>
+          <li>Diseño y revisión de perfiles</li>
+          <li>Acompañamiento ante necesidades concretas</li>
+          <li>Diagnóstico organizacional</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="modules-wrap" id="ondemand">
+      <div class="modules-header">
+        <div>
+          <div class="s-eyebrow" style="margin-bottom:4px;">Módulos On Demand</div>
+          <p>"Contratá solamente lo que necesitás." — Soluciones puntuales sin necesidad de contratar un servicio integral.</p>
+        </div>
+      </div>
+      <div class="modules-grid">
+        {modules.map(m => (
+          <div class="module-pill">{m}</div>
+        ))}
+        <div class="module-pill consultanos">+ Consultanos</div>
+      </div>
+    </div>
+  </div>
+</section>
