@@ -49,15 +49,19 @@ const MOCK_JOBS = [
   },
 ]
 
-export async function getLatestJobs() {
+export async function getLatestJobs(limit = 3) {
   try {
     const res = await fetch(MC_API)
-    if (!res.ok) return MOCK_JOBS
+    if (!res.ok) return MOCK_JOBS.slice(0, limit)
     const json = await res.json()
     const raw = Array.isArray(json) ? json : Array.isArray(json?.data) ? json.data : null
-    if (!raw || raw.length === 0) return MOCK_JOBS
-    return raw.slice(0, 3).map(normalize)
+    if (!raw || raw.length === 0) return MOCK_JOBS.slice(0, limit)
+    return raw.slice(0, limit).map(normalize)
   } catch {
-    return MOCK_JOBS
+    return MOCK_JOBS.slice(0, limit)
   }
+}
+
+export async function getAllJobs() {
+  return getLatestJobs(100)
 }

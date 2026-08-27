@@ -1,0 +1,23 @@
+---
+import Layout from '../layouts/Layout.astro'
+import Jobs from '../components/sections/Jobs.astro'
+import { getAllJobs } from '../lib/micurriculum.js'
+
+const jobs = await getAllJobs()
+---
+
+<Layout
+  title="Oportunidades laborales — Interactiva"
+  description="Conocé las búsquedas laborales activas de Interactiva y postulate directamente en MiCurriculum.com.ar."
+>
+  <div class="page-hero">
+    <div class="page-hero-inner">
+      <div class="s-eyebrow white">Oportunidades laborales</div>
+      <h1 class="s-title white">Todas las búsquedas<br />activas.</h1>
+      <p class="s-body white">
+        Explorá las oportunidades laborales disponibles y postulate directamente en MiCurriculum.
+      </p>
+    </div>
+  </div>
+  <Jobs jobs={jobs} />
+</Layout>

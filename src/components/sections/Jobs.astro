@@ -8,11 +8,17 @@ interface Job {
   url: string
 }
 
-interface Props {
-  jobs: Job[]
+interface HeaderLink {
+  href: string
+  label: string
 }
 
-const { jobs } = Astro.props
+interface Props {
+  jobs: Job[]
+  headerLink?: HeaderLink
+}
+
+const { jobs, headerLink } = Astro.props
 
 function badgeClass(badge: string) {
   const map: Record<string, string> = {
@@ -37,11 +43,11 @@ function dotClass(badge: string) {
     <div class="jobs-header">
       <div>
         <div class="s-eyebrow">Oportunidades laborales</div>
-        <h2 class="s-title" style="font-size:32px;margin-bottom:0;">Últimas búsquedas activas</h2>
+        <h2 class="s-title" style="font-size:32px;margin-bottom:0;">Últimas Oportunidades</h2>
       </div>
-      <a href="https://www.micurriculum.com.ar/avisos-laborales" target="_blank" rel="noopener noreferrer" class="jobs-link">
-        Ver todas en MiCurriculum →
-      </a>
+      {headerLink && (
+        <a href={headerLink.href} class="jobs-link">{headerLink.label}</a>
+      )}
     </div>
 
     <div class="jobs-grid">
@@ -54,17 +60,23 @@ function dotClass(badge: string) {
           </div>
           <span class={`job-badge ${badgeClass(job.badge)}`}>{job.badge}</span>
           <a href={job.url} target="_blank" rel="noopener noreferrer" class="job-cta">
-            Ver búsqueda →
+            Ver oportunidad →
           </a>
         </div>
       ))}
     </div>
 
+    <div class="jobs-viewall">
+      <a href="https://www.micurriculum.com.ar/avisos-laborales" target="_blank" rel="noopener noreferrer" class="btn-primary">
+        Ver todas las oportunidades →
+      </a>
+    </div>
+
     <p class="jobs-footer-note">
-      ¿Buscás trabajo? Postulate en{' '}
+      ¿Buscás trabajo? Creá tu perfil y postulate en{' '}
       <a href="https://www.micurriculum.com.ar" target="_blank" rel="noopener noreferrer">
         MiCurriculum.com.ar
-      </a>{' '}→
+      </a>
     </p>
   </div>
 </section>

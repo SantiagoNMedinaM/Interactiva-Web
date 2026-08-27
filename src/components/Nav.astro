@@ -5,12 +5,22 @@ const waUrl = `https://wa.me/${WA}`
 const links = [
   { href: '/#por-que-interactiva', label: 'Por qué Interactiva' },
   { href: '/servicios', label: 'Servicios' },
-  { href: '/#cuando-ayudamos', label: '¿Cuándo te ayudamos?' },
-  { href: '/blog', label: 'Blog' },
-  { href: 'https://www.micurriculum.com.ar', label: 'Oportunidades', external: true },
+  { href: '/#cuando-ayudamos', label: '¿Cuándo podemos ayudarte?' },
+  {
+    label: 'Blog y Recursos',
+    dropdown: [
+      { href: '/blog', label: 'Blog' },
+      { href: '/recursos', label: 'Centro de Recursos' },
+    ],
+  },
+  { href: '/oportunidades', label: 'Oportunidades Laborales' },
 ]
 
 const currentPath = Astro.url.pathname
+
+function isActive(href: string) {
+  return currentPath === href || currentPath.startsWith(`${href}/`)
+}
 ---
 
 <nav>
@@ -27,13 +37,20 @@ const currentPath = Astro.url.pathname
 
   <div class="nav-links" role="navigation" aria-label="Menú principal">
     {links.map(link => (
-      <a
-        href={link.href}
-        {...(link.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-        class={currentPath === link.href ? 'active' : ''}
-      >
-        {link.label}
-      </a>
+      link.dropdown ? (
+        <div class={`nav-dropdown ${link.dropdown.some(d => isActive(d.href)) ? 'active' : ''}`}>
+          <span class="nav-dropdown-trigger" tabindex="0">{link.label}</span>
+          <div class="nav-dropdown-menu">
+            {link.dropdown.map(d => (
+              <a href={d.href}>{d.label}</a>
+            ))}
+          </div>
+        </div>
+      ) : (
+        <a href={link.href} class={isActive(link.href) ? 'active' : ''}>
+          {link.label}
+        </a>
+      )
     ))}
   </div>
 
@@ -54,12 +71,16 @@ const currentPath = Astro.url.pathname
 
 <div class="nav-mobile" id="nav-mobile" role="navigation" aria-label="Menú móvil">
   {links.map(link => (
-    <a
-      href={link.href}
-      {...(link.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-    >
-      {link.label}
-    </a>
+    link.dropdown ? (
+      <Fragment>
+        <span class="nav-mobile-label">{link.label}</span>
+        {link.dropdown.map(d => (
+          <a href={d.href} class="nav-mobile-sub">{d.label}</a>
+        ))}
+      </Fragment>
+    ) : (
+      <a href={link.href}>{link.label}</a>
+    )
   ))}
   <a href="/contacto" class="nav-cta">Soy empresa →</a>
 </div>

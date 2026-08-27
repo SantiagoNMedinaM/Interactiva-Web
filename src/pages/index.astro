@@ -2,11 +2,12 @@
 import Layout from '../layouts/Layout.astro'
 import Hero from '../components/sections/Hero.astro'
 import WhyInteractiva from '../components/sections/WhyInteractiva.astro'
+import AboutUs from '../components/sections/AboutUs.astro'
 import Services from '../components/sections/Services.astro'
 import WhenWeHelp from '../components/sections/WhenWeHelp.astro'
 import Resources from '../components/sections/Resources.astro'
-import Jobs from '../components/sections/Jobs.astro'
 import BlogSection from '../components/sections/BlogSection.astro'
+import Jobs from '../components/sections/Jobs.astro'
 import MiCurriculumSection from '../components/sections/MiCurriculumSection.astro'
 import ContactForm from '../components/sections/ContactForm.astro'
 import { getLatestPosts } from '../lib/wordpress.js'
@@ -14,7 +15,7 @@ import { getLatestJobs } from '../lib/micurriculum.js'
 
 const [posts, jobs] = await Promise.all([
   getLatestPosts(3),
-  getLatestJobs(),
+  getLatestJobs(3),
 ])
 ---
 
@@ -24,11 +25,12 @@ const [posts, jobs] = await Promise.all([
 >
   <Hero />
   <WhyInteractiva />
+  <AboutUs />
   <Services />
   <WhenWeHelp />
   <Resources />
-  <Jobs jobs={jobs} />
   <BlogSection posts={posts} />
+  <Jobs jobs={jobs} headerLink={{ href: '/oportunidades', label: 'Ver todas las oportunidades →' }} />
   <MiCurriculumSection />
   <ContactForm />
 </Layout>
