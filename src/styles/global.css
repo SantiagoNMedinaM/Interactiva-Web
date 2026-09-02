@@ -7,13 +7,14 @@
 
 /* ── VARIABLES ── */
 :root {
-  --orange: #F07320;
-  --orange-light: #FFF3EA;
-  --orange-dark: #C25A0E;
-  --navy: #0F1C2E;
-  --navy-mid: #1E3148;
-  --slate: #3D5166;
-  --muted: #6B7A8D;
+  --orange: #DE912F;
+  --orange-light: #E7AD47;
+  --orange-dark: #B1701C;
+  --navy: #2B2B2B;
+  --navy-mid: #3D3D3D;
+  --slate: #5C5C5C;
+  --muted: #8A8A8A;
+  --grey-accent: #9C9C9C;
   --light: #F7F5F2;
   --white: #FFFFFF;
   --border: #E2DDD8;
@@ -52,7 +53,7 @@ nav {
 .nav-logo-icon {
   width: 32px;
   height: 32px;
-  background: linear-gradient(135deg, #F5A623, #F07320);
+  background: linear-gradient(135deg, #E7AD47, #DE912F);
   border-radius: 8px;
   display: flex;
   align-items: center;
@@ -305,7 +306,7 @@ nav {
   width: 600px;
   height: 600px;
   border-radius: 50%;
-  border: 80px solid rgba(240, 115, 32, 0.08);
+  border: 80px solid rgba(222, 145, 47, 0.08);
 }
 .hero-left {
   padding: 80px 64px;
@@ -320,7 +321,7 @@ nav {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: rgba(240, 115, 32, 0.15);
+  background: rgba(222, 145, 47, 0.15);
   color: var(--orange);
   font-size: 11px;
   font-weight: 700;
@@ -371,13 +372,14 @@ nav {
   color: rgba(255, 255, 255, 0.4);
 }
 .hero-right {
-  background: linear-gradient(135deg, #162436 0%, #0F1C2E 100%);
+  /* background: linear-gradient(135deg, #162436 0%, #0F1C2E 100%);*/
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 48px;
   position: relative;
   z-index: 1;
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
 }
 .hero-card-stack {
   display: flex;
@@ -395,8 +397,8 @@ nav {
   gap: 16px;
 }
 .hero-card.accent {
-  background: rgba(240, 115, 32, 0.1);
-  border-color: rgba(240, 115, 32, 0.2);
+  background: rgba(222, 145, 47, 0.1);
+  border-color: rgba(222, 145, 47, 0.2);
 }
 .hero-card-icon {
   width: 44px;
@@ -408,7 +410,7 @@ nav {
   font-size: 20px;
   flex-shrink: 0;
 }
-.hero-card-icon.o { background: rgba(240, 115, 32, 0.2); }
+.hero-card-icon.o { background: rgba(222, 145, 47, 0.2); }
 .hero-card-icon.g { background: rgba(26, 122, 94, 0.2); }
 .hero-card-icon.b { background: rgba(59, 130, 246, 0.15); }
 .hero-card-ttl {
@@ -425,7 +427,7 @@ nav {
   margin-left: auto;
   font-size: 10px;
   font-weight: 700;
-  background: rgba(240, 115, 32, 0.2);
+  background: rgba(222, 145, 47, 0.2);
   color: var(--orange);
   padding: 4px 10px;
   border-radius: 20px;
@@ -500,13 +502,15 @@ nav {
 
 /* ── SERVICIOS ── */
 .services-stack {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 20px;
+  align-items: stretch;
 }
 .services-grid {
   display: grid;
   grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
   gap: 20px;
 }
 .service-card {
@@ -537,7 +541,7 @@ nav {
   color: var(--orange-dark);
 }
 .service-badge.navy {
-  background: rgba(240, 115, 32, 0.2);
+  background: rgba(222, 145, 47, 0.2);
   color: var(--orange);
 }
 .service-card h3 {
@@ -580,31 +584,17 @@ nav {
   font-size: 12px;
   flex-shrink: 0;
 }
-.modules-wrap {
-  background: var(--light);
-  border-radius: 16px;
-  padding: 28px 32px;
-}
-.modules-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 16px;
-}
-.modules-header p {
-  font-size: 14px;
-  color: var(--slate);
-}
 .modules-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-top: 4px;
 }
 .module-pill {
-  background: white;
+  background: var(--light);
   border: 1px solid var(--border);
   border-radius: 10px;
-  padding: 14px 16px;
+  padding: 12px 14px;
   font-size: 12px;
   font-weight: 500;
   color: var(--slate);
@@ -623,9 +613,21 @@ nav {
 .module-pill.consultanos {
   border: 1.5px dashed var(--orange);
   color: var(--orange);
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
 }
 .module-pill.consultanos::before {
   background: var(--orange);
+  transition: background 0.2s;
+}
+.module-pill.consultanos:hover {
+  background: var(--orange);
+  border-color: var(--orange);
+  color: white;
+}
+.module-pill.consultanos:hover::before {
+  background: white;
 }
 
 /* ── CUÁNDO PODEMOS AYUDARTE ── */
@@ -647,7 +649,7 @@ nav {
   font-family: 'Fraunces', serif;
   font-size: 36px;
   font-weight: 700;
-  color: rgba(240, 115, 32, 0.3);
+  color: rgba(222, 146, 47, 0.864);
   line-height: 1;
 }
 .cuando-card p {
@@ -656,8 +658,8 @@ nav {
   line-height: 1.6;
 }
 .cuando-close {
-  background: rgba(240, 115, 32, 0.1);
-  border: 1px solid rgba(240, 115, 32, 0.2);
+  background: rgba(222, 146, 47, 0.275);
+  border: 1px solid rgba(222, 146, 47, 0.2);
   border-radius: 14px;
   padding: 28px 32px;
   margin-top: 24px;
@@ -903,8 +905,8 @@ nav {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: rgba(240, 115, 32, 0.15);
-  border: 1px solid rgba(240, 115, 32, 0.2);
+  background: rgba(222, 145, 47, 0.15);
+  border: 1px solid rgba(222, 145, 47, 0.2);
   border-radius: 20px;
   padding: 6px 14px;
   font-size: 11px;
@@ -935,7 +937,7 @@ nav {
   width: 28px;
   height: 28px;
   border-radius: 50%;
-  background: rgba(240, 115, 32, 0.2);
+  background: rgba(222, 145, 47, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1300,11 +1302,11 @@ footer {
   .about-grid {
     grid-template-columns: 1fr;
   }
-  .services-grid {
+  .services-stack {
     grid-template-columns: 1fr;
   }
-  .modules-grid {
-    grid-template-columns: 1fr 1fr;
+  .services-grid {
+    grid-template-columns: 1fr;
   }
   .cuando-grid {
     grid-template-columns: 1fr 1fr;
