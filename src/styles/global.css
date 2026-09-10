@@ -150,10 +150,12 @@ nav {
 }
 .nav-mobile {
   display: none;
-  position: absolute;
+  position: fixed;
   top: 68px;
   left: 0;
   right: 0;
+  max-height: calc(100vh - 68px);
+  overflow-y: auto;
   background: white;
   border-bottom: 1px solid var(--border);
   padding: 16px 24px 24px;
@@ -309,6 +311,7 @@ nav {
   gap: 28px;
   position: relative;
   z-index: 1;
+  min-width: 0;
 }
 .hero-tag {
   display: inline-flex;
@@ -1488,22 +1491,16 @@ footer.footer-inverted .footer-bottom p {
     background: none;
     border: none;
     cursor: pointer;
-    min-height: 44px;
-    padding: 16px 0;
+    min-height: 40px;
+    padding: 10px 0;
     font-family: 'DM Sans', sans-serif;
     text-align: left;
   }
   .footer-col:not(:first-child) {
     border-top: 1px solid rgba(255, 255, 255, 0.08);
   }
-  .footer-col:last-child {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  }
   footer.footer-inverted .footer-col:not(:first-child) {
     border-top-color: var(--border);
-  }
-  footer.footer-inverted .footer-col:last-child {
-    border-bottom-color: var(--border);
   }
   .footer-col-chev {
     display: inline-block;
