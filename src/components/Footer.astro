@@ -9,6 +9,26 @@ const WA = import.meta.env.PUBLIC_WHATSAPP
 const waUrl = `https://wa.me/${WA}`
 const waPostulantesUrl = 'https://wa.me/5492657497391'
 const logoSrc = variant === 'inverted' ? '/logos/logo-interactiva.png' : '/logos/logo-interactiva-white.png'
+
+const columns = [
+  {
+    title: 'Servicios',
+    links: [
+      { href: '/servicios#atraccion', label: 'Atracción de talento' },
+      { href: '/servicios#ondemand', label: 'Módulos On Demand' },
+      { href: '/servicios#consultoria', label: 'Consultoría en RRHH' },
+    ],
+  },
+  {
+    title: 'Empresa',
+    links: [
+      { href: '/#por-que-interactiva', label: 'Por qué Interactiva' },
+      { href: '/blog', label: 'Blog' },
+      { href: '/recursos', label: 'Centro de Recursos' },
+      { href: '/oportunidades', label: 'Oportunidades laborales' },
+    ],
+  },
+]
 ---
 
 <footer class={variant === 'inverted' ? 'footer-inverted' : ''}>
@@ -27,31 +47,35 @@ const logoSrc = variant === 'inverted' ? '/logos/logo-interactiva.png' : '/logos
         </div>
       </div>
 
-      <div class="footer-col">
-        <h4>Servicios</h4>
-        <a href="/servicios#atraccion">Atracción de talento</a>
-        <a href="/servicios#ondemand">Módulos On Demand</a>
-        <a href="/servicios#consultoria">Consultoría en RRHH</a>
-      </div>
+      {columns.map(col => (
+        <div class="footer-col">
+          <button type="button" class="footer-col-trigger" aria-expanded="false" data-footer-accordion>
+            {col.title}
+            <span class="footer-col-chev" aria-hidden="true">⌄</span>
+          </button>
+          <div class="footer-col-panel">
+            {col.links.map(l => (
+              <a href={l.href}>{l.label}</a>
+            ))}
+          </div>
+        </div>
+      ))}
 
       <div class="footer-col">
-        <h4>Empresa</h4>
-        <a href="/#por-que-interactiva">Por qué Interactiva</a>
-        <a href="/blog">Blog</a>
-        <a href="/recursos">Centro de Recursos</a>
-        <a href="/oportunidades">Oportunidades laborales</a>
-      </div>
-
-      <div class="footer-col">
-        <h4>Contacto</h4>
-        <span class="footer-contact-label">Empresas</span>
-        <a href="mailto:comercial@interactiva.com.ar">comercial@interactiva.com.ar</a>
-        <a href={waUrl} target="_blank" rel="noopener noreferrer">WhatsApp</a>
-        <a href="/contacto">Formulario de consulta</a>
-        <span class="footer-contact-label">Candidatos / Postulantes</span>
-        <a href="mailto:consultoria@interactiva.com.ar">consultoria@interactiva.com.ar</a>
-        <a href="mailto:consultoria@interactiva.com.ar">CV@interactiva.com.ar</a>
-        <a href={waPostulantesUrl} target="_blank" rel="noopener noreferrer">WhatsApp Postulantes</a>
+        <button type="button" class="footer-col-trigger" aria-expanded="true" data-footer-accordion>
+          Contacto
+          <span class="footer-col-chev" aria-hidden="true">⌄</span>
+        </button>
+        <div class="footer-col-panel">
+          <span class="footer-contact-label">Empresas</span>
+          <a href="mailto:comercial@interactiva.com.ar">comercial@interactiva.com.ar</a>
+          <a href={waUrl} target="_blank" rel="noopener noreferrer">WhatsApp</a>
+          <a href="/contacto">Formulario de consulta</a>
+          <span class="footer-contact-label">Candidatos / Postulantes</span>
+          <a href="mailto:consultoria@interactiva.com.ar">consultoria@interactiva.com.ar</a>
+          <a href="mailto:consultoria@interactiva.com.ar">CV@interactiva.com.ar</a>
+          <a href={waPostulantesUrl} target="_blank" rel="noopener noreferrer">WhatsApp Postulantes</a>
+        </div>
       </div>
     </div>
 
@@ -60,3 +84,13 @@ const logoSrc = variant === 'inverted' ? '/logos/logo-interactiva.png' : '/logos
     </div>
   </div>
 </footer>
+
+<script>
+  document.querySelectorAll('[data-footer-accordion]').forEach(trigger => {
+    trigger.addEventListener('click', () => {
+      const wasOpen = trigger.getAttribute('aria-expanded') === 'true'
+      document.querySelectorAll('[data-footer-accordion]').forEach(t => t.setAttribute('aria-expanded', 'false'))
+      if (!wasOpen) trigger.setAttribute('aria-expanded', 'true')
+    })
+  })
+</script>

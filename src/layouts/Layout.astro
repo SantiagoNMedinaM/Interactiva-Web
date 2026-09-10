@@ -2,6 +2,7 @@
 import { ClientRouter } from 'astro:transitions'
 import Nav from '../components/Nav.astro'
 import Footer from '../components/Footer.astro'
+import StickyMobileCta from '../components/StickyMobileCta.astro'
 import '../styles/global.css'
 
 interface Props {
@@ -15,6 +16,8 @@ const {
   description = 'Más de 20 años acompañando a empresas y organizaciones en gestión de capital humano. Atracción de talento, consultoría en RRHH y módulos on demand.',
   footerVariant = 'default'
 } = Astro.props
+
+const isContacto = Astro.url.pathname === '/contacto' || Astro.url.pathname.startsWith('/contacto/')
 ---
 
 <!doctype html>
@@ -33,11 +36,12 @@ const {
     <meta name="description" content={description} />
     <ClientRouter />
   </head>
-  <body>
+  <body class={isContacto ? '' : 'has-sticky-cta'}>
     <Nav />
     <main>
       <slot />
     </main>
     <Footer variant={footerVariant} />
+    {!isContacto && <StickyMobileCta />}
   </body>
 </html>

@@ -426,6 +426,11 @@ nav {
   border-radius: 20px;
   flex-shrink: 0;
 }
+/* Carrusel de hero-card para mobile: oculto por defecto, se activa en @media (max-width: 900px) */
+.hero-cards-scroll,
+.scroll-dots {
+  display: none;
+}
 
 /* ── POR QUÉ INTERACTIVA ── */
 .why-grid {
@@ -621,6 +626,10 @@ nav {
 }
 .module-pill.consultanos:hover::before {
   background: white;
+}
+/* Botón "ver todos los módulos": oculto por defecto, se activa en @media (max-width: 900px) */
+.modules-toggle {
+  display: none;
 }
 .service-cta {
   margin-top: auto;
@@ -1176,13 +1185,19 @@ footer {
   background: rgba(255, 255, 255, 0.15);
   color: white;
 }
-.footer-col h4 {
+.footer-col-trigger {
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 2px;
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.3);
   margin-bottom: 14px;
+}
+.footer-col-chev {
+  display: none;
+}
+.footer-col-panel {
+  display: block;
 }
 .footer-col a {
   display: block;
@@ -1226,6 +1241,10 @@ footer {
   font-size: 11px;
   color: rgba(255, 255, 255, 0.25);
 }
+/* Barra de CTA fija: oculta por defecto, se activa en @media (max-width: 900px) */
+.sticky-mobile-cta {
+  display: none;
+}
 
 /* ── FOOTER INVERTIDO (solo /recursos) ── */
 footer.footer-inverted {
@@ -1243,7 +1262,7 @@ footer.footer-inverted .social-icon:hover {
   background: var(--navy);
   color: white;
 }
-footer.footer-inverted .footer-col h4 {
+footer.footer-inverted .footer-col-trigger {
   color: var(--slate);
 }
 footer.footer-inverted .footer-col a {
@@ -1320,6 +1339,13 @@ footer.footer-inverted .footer-bottom p {
   }
   .nav-hamburger {
     display: flex;
+    min-width: 44px;
+    min-height: 44px;
+    align-items: center;
+    justify-content: center;
+  }
+  .nav-mobile a {
+    min-height: 44px;
   }
 
   .hero {
@@ -1335,6 +1361,43 @@ footer.footer-inverted .footer-bottom p {
   .hero-title {
     font-size: 38px;
     letter-spacing: -1px;
+  }
+
+  .hero-cards-scroll {
+    display: flex;
+    gap: 10px;
+    margin-top: 22px;
+    padding: 2px 24px 4px;
+    margin-left: -24px;
+    margin-right: -24px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+  .hero-cards-scroll::-webkit-scrollbar {
+    display: none;
+  }
+  .hero-cards-scroll .hero-card {
+    scroll-snap-align: start;
+    flex: 0 0 240px;
+  }
+  .scroll-dots {
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+    margin-top: 10px;
+  }
+  .scroll-dots span {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    transition: background 0.2s, width 0.2s;
+  }
+  .scroll-dots span.active {
+    background: var(--orange);
+    width: 14px;
+    border-radius: 3px;
   }
 
   .section-wrap {
@@ -1359,6 +1422,24 @@ footer.footer-inverted .footer-bottom p {
   }
   .services-grid {
     grid-template-columns: 1fr;
+  }
+  .module-pill.hidden-extra {
+    display: none;
+  }
+  .modules-toggle {
+    display: block;
+    grid-column: span 2;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--navy);
+    background: none;
+    border: none;
+    padding: 10px;
+    margin-top: 2px;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    cursor: pointer;
   }
   .cuando-grid {
     grid-template-columns: 1fr 1fr;
@@ -1388,11 +1469,57 @@ footer.footer-inverted .footer-bottom p {
   .cta-title {
     font-size: 32px;
   }
+  .form-input,
+  .form-select,
+  .form-textarea {
+    font-size: 16px;
+  }
   footer {
     padding: 48px 24px 24px;
   }
   .footer-top {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
+  }
+  .footer-col-trigger {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    background: none;
+    border: none;
+    cursor: pointer;
+    min-height: 44px;
+    padding: 16px 0;
+    font-family: 'DM Sans', sans-serif;
+    text-align: left;
+  }
+  .footer-col:not(:first-child) {
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .footer-col:last-child {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  footer.footer-inverted .footer-col:not(:first-child) {
+    border-top-color: var(--border);
+  }
+  footer.footer-inverted .footer-col:last-child {
+    border-bottom-color: var(--border);
+  }
+  .footer-col-chev {
+    display: inline-block;
+    color: var(--orange);
+    font-size: 12px;
+    transition: transform 0.2s;
+  }
+  .footer-col-trigger[aria-expanded="true"] .footer-col-chev {
+    transform: rotate(180deg);
+  }
+  .footer-col-panel {
+    display: none;
+    padding-bottom: 16px;
+  }
+  .footer-col-trigger[aria-expanded="true"] + .footer-col-panel {
+    display: block;
   }
   .jobs-header {
     flex-direction: column;
@@ -1407,6 +1534,44 @@ footer.footer-inverted .footer-bottom p {
   }
   .post-content {
     padding: 40px 24px;
+  }
+
+  body.has-sticky-cta {
+    padding-bottom: 68px;
+  }
+  .sticky-mobile-cta {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 90;
+    gap: 8px;
+    background: white;
+    border-top: 1px solid var(--border);
+    padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
+    box-shadow: 0 -6px 18px rgba(15, 28, 46, 0.08);
+  }
+  .sticky-mobile-cta a {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 12px;
+    border-radius: 9px;
+    font-size: 12.5px;
+    font-weight: 600;
+    text-decoration: none;
+    min-height: 44px;
+  }
+  .sticky-mobile-cta .wa {
+    background: var(--green-light);
+    color: var(--green);
+  }
+  .sticky-mobile-cta .consult {
+    background: var(--orange);
+    color: white;
   }
 }
 

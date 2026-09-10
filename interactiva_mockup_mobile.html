@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Interactiva — Mockup Mobile</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* ============ TOKENS (copiados 1:1 de src/styles/global.css) ============ */
+  :root {
+    --orange: #DE912F;
+    --orange-light: #E7AD47;
+    --orange-dark: #B1701C;
+    --navy: #0F1C2E;
+    --navy-mid: #1E3148;
+    --slate: #3D5166;
+    --muted: #6B7A8D;
+    --light: #F7F5F2;
+    --white: #FFFFFF;
+    --border: #E2DDD8;
+    --green: #1A7A5E;
+    --green-light: #EAF7F2;
+  }
+  * { box-sizing: border-box; margin:0; padding:0; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #EDEAE4;
+    color: var(--navy);
+    padding: 32px 12px 80px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ============ PAGE CHROME (solo para presentar el mockup, no es parte del sitio) ============ */
+  .mockup-intro {
+    max-width: 390px;
+    margin: 0 auto 20px;
+    text-align: center;
+  }
+  .mockup-intro h1 {
+    font-family: 'Fraunces', serif;
+    font-size: 19px;
+    margin-bottom: 6px;
+  }
+  .mockup-intro p {
+    font-size: 12.5px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+  .mockup-tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--orange-dark);
+    background: var(--orange-light);
+    padding: 4px 10px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+  }
+
+  .phone {
+    max-width: 390px;
+    margin: 0 auto;
+    background: var(--white);
+    border-radius: 34px;
+    box-shadow: 0 30px 60px rgba(15,28,46,0.25), 0 0 0 8px #111, 0 0 0 9px #333;
+    overflow: hidden;
+    position: relative;
+  }
+  .notch {
+    height: 28px;
+    background: #111;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .notch::before {
+    content:'';
+    width: 90px; height: 16px;
+    background: #000;
+    border-radius: 10px;
+  }
+  .screen {
+    max-height: 780px;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+  }
+  .annot {
+    background: #171e2b;
+    color: #DE912F;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: .5px;
+    padding: 7px 14px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .annot::before { content: '●'; font-size: 8px; }
+  .annot span.note { color: rgba(255,255,255,0.55); font-weight: 500; text-transform: none; letter-spacing: 0; }
+
+  /* ============ NAV ============ */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: white;
+    border-bottom: 1px solid var(--border);
+    padding: 0 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 58px;
+  }
+  .nav-logo-img { height: 26px; }
+  .nav-hamburger {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    padding: 10px;
+    margin: -10px;
+  }
+  .nav-hamburger span {
+    display: block; width: 22px; height: 2px;
+    background: var(--navy); border-radius: 2px;
+  }
+  .nav-cta-mini {
+    background: var(--orange);
+    color: white;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .nav-mobile-panel {
+    background: white;
+    border-bottom: 1px solid var(--border);
+    padding: 6px 16px 18px;
+  }
+  .nav-mobile-panel a {
+    display: block;
+    text-decoration: none;
+    color: var(--slate);
+    font-size: 15px;
+    padding: 13px 4px;
+    border-bottom: 1px solid var(--border);
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+  .nav-mobile-panel a:last-of-type { border-bottom: none; }
+  .nav-mobile-label {
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 14px 4px 4px;
+  }
+  .nav-mobile-sub { padding-left: 14px !important; font-size: 14px !important; color: var(--muted) !important; }
+  .nav-mobile-panel .nav-cta-mini {
+    display: block;
+    text-align: center;
+    margin-top: 14px;
+    padding: 13px;
+  }
+
+  /* ============ HERO ============ */
+  .hero {
+    background: var(--navy);
+    padding: 36px 20px 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content:'';
+    position:absolute; top:-80px; right:-100px;
+    width:280px; height:280px; border-radius:50%;
+    border: 50px solid rgba(222,145,47,0.08);
+  }
+  .hero-tag {
+    display: inline-flex; align-items:center; gap:6px;
+    background: rgba(222,145,47,0.15);
+    color: var(--orange);
+    font-size: 10px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase;
+    padding: 5px 12px; border-radius: 20px;
+    position: relative; z-index: 1;
+  }
+  .hero-title {
+    font-family:'Fraunces', serif;
+    font-size: 30px; font-weight:700; color:white;
+    line-height:1.15; letter-spacing:-0.5px;
+    margin: 14px 0 10px;
+    position: relative; z-index: 1;
+  }
+  .hero-title em { color: var(--orange); font-style: normal; }
+  .hero-desc {
+    font-size: 14px; color: rgba(255,255,255,0.55); line-height:1.65;
+    position: relative; z-index: 1;
+  }
+  .hero-btns {
+    display:flex; flex-direction:column; gap:10px; margin-top:20px;
+    position: relative; z-index: 1;
+  }
+  .btn-primary, .btn-ghost {
+    display:flex; align-items:center; justify-content:center;
+    padding: 14px 22px; border-radius:10px;
+    font-size:14px; font-weight:600; text-decoration:none;
+    min-height: 48px;
+  }
+  .btn-primary { background: var(--orange); color:white; }
+  .btn-ghost { border:1.5px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.8); }
+
+  .hero-stats {
+    display:flex; gap:18px; margin-top:22px; padding-top:18px;
+    border-top:1px solid rgba(255,255,255,0.1);
+    position: relative; z-index: 1;
+  }
+  .hero-stat-num { font-family:'Fraunces',serif; font-size:20px; font-weight:700; color:white; }
+  .hero-stat-label { font-size:10px; color:rgba(255,255,255,0.4); line-height:1.3; margin-top:2px; }
+
+  /* trust cards: antes display:none en mobile -> ahora carrusel horizontal */
+  .hero-cards-scroll {
+    display: flex;
+    gap: 10px;
+    margin-top: 22px;
+    padding: 2px 20px 4px;
+    margin-left: -20px; margin-right: -20px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    position: relative; z-index: 1;
+  }
+  .hero-cards-scroll::-webkit-scrollbar { display: none; }
+  .hero-card {
+    scroll-snap-align: start;
+    flex: 0 0 240px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 14px;
+    padding: 16px 18px;
+    display:flex; align-items:center; gap:12px;
+  }
+  .hero-card.accent { background: rgba(222,145,47,0.1); border-color: rgba(222,145,47,0.2); }
+  .hero-card-icon {
+    width: 36px; height:36px; border-radius:10px; flex-shrink:0;
+    display:flex; align-items:center; justify-content:center; font-size:16px;
+    background: rgba(222,145,47,0.2); color: var(--orange);
+  }
+  .hero-card-ttl { font-size:12.5px; font-weight:600; color:white; margin-bottom:2px; }
+  .hero-card-txt { font-size:11px; color:rgba(255,255,255,0.4); line-height:1.35; }
+  .scroll-dots { display:flex; gap:5px; justify-content:center; margin-top:10px; position:relative; z-index:1; }
+  .scroll-dots span { width:5px; height:5px; border-radius:50%; background: rgba(255,255,255,0.2); }
+  .scroll-dots span:first-child { background: var(--orange); width:14px; border-radius:3px; }
+
+  /* ============ SECTION GENERIC ============ */
+  .section-wrap { padding: 44px 20px; }
+  .section-wrap.bg-light { background: var(--light); }
+  .section-wrap.bg-navy { background: var(--navy); }
+  .s-eyebrow {
+    font-size: 9.5px; font-weight:700; letter-spacing:2px; text-transform:uppercase;
+    color: var(--orange); margin-bottom:9px;
+  }
+  .s-eyebrow.white { color: rgba(255,255,255,0.5); }
+  .s-title {
+    font-family:'Fraunces',serif; font-size:24px; font-weight:700; line-height:1.2;
+    letter-spacing:-0.5px; color:var(--navy); margin-bottom:12px;
+  }
+  .s-title.white { color:white; }
+  .s-body { color: var(--muted); font-size:13.5px; line-height:1.65; }
+  .s-body.white { color: rgba(255,255,255,0.5); }
+
+  /* ============ WHY ============ */
+  .why-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:20px; }
+  .why-card { background:white; border-radius:14px; padding:16px; border:1px solid var(--border); }
+  .why-card-accent { height:3px; width:28px; background:var(--orange); border-radius:2px; margin-bottom:10px; }
+  .why-card h3 { font-family:'Fraunces',serif; font-size:14px; margin-bottom:5px; }
+  .why-card p { font-size:11.5px; color:var(--muted); line-height:1.5; }
+
+  /* ============ SERVICES ============ */
+  .services-stack { display:flex; flex-direction:column; gap:14px; margin-top:20px; }
+  .service-card {
+    background:white; border-radius:14px; padding:22px 20px;
+    border:1px solid var(--border);
+    display:flex; flex-direction:column; gap:12px;
+  }
+  .service-card.featured { background: var(--navy); border-color: var(--navy); }
+  .service-badge {
+    display:inline-block; font-size:9.5px; font-weight:700; letter-spacing:1px;
+    text-transform:uppercase; padding:4px 10px; border-radius:20px; width:fit-content;
+  }
+  .service-badge.orange { background: var(--orange-light); color: var(--orange-dark); }
+  .service-badge.navy { background: rgba(222,145,47,0.2); color: var(--orange); }
+  .service-card h3 { font-family:'Fraunces',serif; font-size:18px; color:var(--navy); }
+  .service-card.featured h3 { color:white; }
+  .service-card p { font-size:12.5px; color:var(--muted); line-height:1.55; }
+  .service-card.featured p { color: rgba(255,255,255,0.55); }
+  .service-list { list-style:none; }
+  .service-list li {
+    font-size:12.5px; color:var(--slate); padding:9px 0;
+    border-bottom:1px solid var(--border); display:flex; gap:7px; align-items:flex-start;
+  }
+  .service-card.featured .service-list li { color:rgba(255,255,255,0.65); border-bottom-color:rgba(255,255,255,0.1); }
+  .service-list li::before { content:'→'; color:var(--orange); font-weight:700; font-size:11px; flex-shrink:0; margin-top:1px; }
+  .service-cta {
+    margin-top:2px; font-size:13px; font-weight:600; color:var(--orange); text-decoration:none;
+    display:inline-flex; align-items:center; min-height:32px;
+  }
+  .service-card.featured .service-cta { color: var(--orange-light); }
+
+  /* modules: colapsado con "ver todos" en vez de 8 pills sueltas */
+  .modules-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:2px; }
+  .module-pill {
+    background: var(--light); border:1px solid var(--border); border-radius:9px;
+    padding:10px 11px; font-size:11px; font-weight:500; color:var(--slate);
+    display:flex; align-items:center; gap:6px; line-height:1.3;
+  }
+  .module-pill::before { content:''; width:5px;height:5px;border-radius:50%; background:var(--orange); flex-shrink:0; }
+  .module-pill.hidden-extra { display: none; }
+  .module-pill.consultanos {
+    border:1.5px dashed var(--orange); color:var(--orange); grid-column: span 2;
+    justify-content:center; text-decoration:none; font-weight:600;
+  }
+  .modules-toggle {
+    grid-column: span 2;
+    text-align:center; font-size:12px; font-weight:600; color:var(--navy);
+    background:none; border:none; padding:10px; margin-top:2px;
+    text-decoration: underline; text-underline-offset: 3px;
+  }
+
+  /* ============ CUANDO ============ */
+  .cuando-grid { display:flex; flex-direction:column; gap:10px; margin-top:20px; }
+  .cuando-card {
+    background: rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.08);
+    border-radius:12px; padding:16px 18px; display:flex; gap:14px; align-items:flex-start;
+  }
+  .cuando-card-num { font-family:'Fraunces',serif; font-size:22px; font-weight:700; color:rgba(222,146,47,0.85); flex-shrink:0; line-height:1.2; }
+  .cuando-card p { font-size:12.5px; color:rgba(255,255,255,0.7); line-height:1.5; }
+  .cuando-close {
+    background: rgba(222,146,47,0.18); border:1px solid rgba(222,146,47,0.25);
+    border-radius:14px; padding:20px; margin-top:18px;
+    display:flex; flex-direction:column; gap:14px;
+  }
+  .cuando-close p { font-size:14px; color:white; font-style:italic; line-height:1.5; }
+  .cuando-cta {
+    background: var(--orange); color:white; padding:13px; border-radius:9px;
+    font-size:13px; font-weight:600; text-align:center; text-decoration:none;
+  }
+
+  /* ============ STICKY MOBILE CTA BAR ============ */
+  .sticky-cta {
+    position: sticky;
+    bottom: 0;
+    z-index: 90;
+    display: flex;
+    gap: 8px;
+    background: white;
+    border-top: 1px solid var(--border);
+    padding: 10px 12px;
+    box-shadow: 0 -6px 18px rgba(15,28,46,0.08);
+  }
+  .sticky-cta a {
+    flex:1; display:flex; align-items:center; justify-content:center; gap:6px;
+    padding:12px; border-radius:9px; font-size:12.5px; font-weight:600; text-decoration:none;
+    min-height: 44px;
+  }
+  .sticky-cta .wa { background: #EAF7F2; color:#1A7A5E; }
+  .sticky-cta .consult { background: var(--orange); color:white; }
+
+  /* ============ FOOTER (acordeón) ============ */
+  footer { background: var(--navy); padding: 36px 20px 24px; }
+  .footer-logo-img { height:22px; margin-bottom:10px; }
+  .footer-desc { font-size:11.5px; color:rgba(255,255,255,0.35); line-height:1.6; margin-bottom:14px; }
+  .footer-social { display:flex; gap:8px; margin-bottom:22px; }
+  .social-icon {
+    width:32px;height:32px; background:rgba(255,255,255,0.07); border-radius:8px;
+    display:flex; align-items:center; justify-content:center; font-size:11px; color:rgba(255,255,255,0.4);
+  }
+  .footer-accordion-item { border-top:1px solid rgba(255,255,255,0.08); }
+  .footer-accordion-item:last-of-type { border-bottom:1px solid rgba(255,255,255,0.08); }
+  .footer-accordion-trigger {
+    width:100%; background:none; border:none; text-align:left;
+    display:flex; align-items:center; justify-content:space-between;
+    padding: 16px 2px; min-height:44px;
+    font-size:11px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase;
+    color: rgba(255,255,255,0.55);
+  }
+  .footer-accordion-trigger .chev { color: var(--orange); font-size:12px; transition: transform .2s; }
+  .footer-accordion-item.open .chev { transform: rotate(180deg); }
+  .footer-accordion-panel { display:none; padding: 0 2px 16px; }
+  .footer-accordion-item.open .footer-accordion-panel { display:block; }
+  .footer-accordion-panel a {
+    display:block; font-size:13px; color:rgba(255,255,255,0.6); text-decoration:none;
+    padding: 9px 0; min-height: 40px; display:flex; align-items:center;
+  }
+  .footer-contact-label {
+    display:block; font-size:9.5px; font-weight:700; letter-spacing:1px; text-transform:uppercase;
+    color: rgba(255,255,255,0.28); margin: 8px 0 2px;
+  }
+  .footer-contact-label:first-of-type { margin-top: 4px; }
+  .footer-bottom {
+    border-top:1px solid rgba(255,255,255,0.08); margin-top:18px; padding-top:16px;
+    font-size:10.5px; color:rgba(255,255,255,0.25);
+  }
+</style>
+</head>
+<body>
+
+<div class="mockup-intro">
+  <div class="mockup-tag">Referencia visual — mobile</div>
+  <h1>Interactiva — versión mobile</h1>
+  <p>Mismos tokens de color/tipografía que global.css. Scrolleá la pantalla como en un teléfono real. Las franjas oscuras marcan qué cambia respecto al desktop actual.</p>
+</div>
+
+<div class="phone">
+  <div class="notch"></div>
+  <div class="screen">
+
+    <!-- NAV -->
+    <nav>
+      <img src="https://interactiva-web.vercel.app/logos/logo-interactiva.png" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'" class="nav-logo-img" alt="Interactiva" />
+      <span style="display:none; font-family:'Fraunces',serif; font-weight:700; font-size:16px; color:var(--slate);">interactiva</span>
+      <button class="nav-hamburger" aria-label="Abrir menú"><span></span><span></span><span></span></button>
+    </nav>
+    <div class="annot"><span class="note">Nav: mismo hamburger, targets táctiles de 44px (antes ~30px)</span></div>
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-tag">Consultoría de Capital Humano</div>
+      <h1 class="hero-title">Mejores decisiones en <em>gestión</em> de personas.</h1>
+      <p class="hero-desc">Experiencia regional, enfoque práctico y flexibilidad para acompañar a empresas en cada etapa de la gestión de capital humano.</p>
+      <div class="hero-btns">
+        <a href="#" class="btn-primary">Soy empresa / organización</a>
+        <a href="#" class="btn-ghost">Oportunidades laborales</a>
+      </div>
+      <div class="hero-stats">
+        <div><div class="hero-stat-num">+20</div><div class="hero-stat-label">años de<br/>experiencia</div></div>
+        <div><div class="hero-stat-num">+500</div><div class="hero-stat-label">búsquedas<br/>exitosas</div></div>
+        <div><div class="hero-stat-num">Regional</div><div class="hero-stat-label">raíces locales,<br/>visión amplia</div></div>
+      </div>
+
+      <div class="hero-cards-scroll" id="heroScroll">
+        <div class="hero-card">
+          <div class="hero-card-icon">🎯</div>
+          <div><div class="hero-card-ttl">Atracción de talento</div><div class="hero-card-txt">Encontramos el perfil que necesitás</div></div>
+        </div>
+        <div class="hero-card">
+          <div class="hero-card-icon">⚙️</div>
+          <div><div class="hero-card-ttl">Consultoría en RRHH</div><div class="hero-card-txt">Ordenamos la gestión de personas</div></div>
+        </div>
+        <div class="hero-card">
+          <div class="hero-card-icon">⚡</div>
+          <div><div class="hero-card-ttl">Módulos On Demand</div><div class="hero-card-txt">Contratá solo lo que necesitás</div></div>
+        </div>
+        <div class="hero-card accent">
+          <div class="hero-card-icon">📍</div>
+          <div><div class="hero-card-ttl">Raíces locales</div><div class="hero-card-txt">Conocemos el contexto regional</div></div>
+        </div>
+      </div>
+      <div class="scroll-dots"><span></span><span></span><span></span><span></span></div>
+    </section>
+    <div class="annot"><span class="note">Hero: las 4 cards de confianza ya NO se ocultan — pasan a carrusel horizontal con scroll-snap</span></div>
+
+    <!-- WHY -->
+    <section class="section-wrap bg-light">
+      <div class="s-eyebrow">Por qué Interactiva</div>
+      <h2 class="s-title">Un socio estratégico, no un proveedor más.</h2>
+      <div class="why-grid">
+        <div class="why-card"><div class="why-card-accent"></div><h3>+20 años</h3><p>de experiencia regional en gestión de personas.</p></div>
+        <div class="why-card"><div class="why-card-accent"></div><h3>Enfoque práctico</h3><p>soluciones adaptadas a cada organización.</p></div>
+        <div class="why-card"><div class="why-card-accent"></div><h3>Flexibilidad</h3><p>contratá solo lo que tu proceso necesita.</p></div>
+        <div class="why-card"><div class="why-card-accent"></div><h3>Cercanía</h3><p>acompañamiento real durante todo el proceso.</p></div>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section class="section-wrap" style="background:white;">
+      <div class="s-eyebrow">Servicios / Soluciones</div>
+      <h2 class="s-title">Soluciones para cada necesidad de tu organización.</h2>
+      <p class="s-body">Organizamos nuestra oferta por necesidades reales del cliente, no por una lista genérica de servicios.</p>
+
+      <div class="services-stack">
+        <div class="service-card featured">
+          <div class="service-badge navy">Principal</div>
+          <h3>Atracción de talento</h3>
+          <p>"Encontramos y acercamos el talento que tu organización necesita."</p>
+          <ul class="service-list">
+            <li>Búsqueda y selección de personal</li>
+            <li>Headhunting / reclutamiento especializado</li>
+            <li>Evaluación integral de candidatos</li>
+          </ul>
+          <a href="#" class="service-cta">Consultanos →</a>
+        </div>
+
+        <div class="service-card">
+          <div class="service-badge orange">On Demand</div>
+          <h3>Módulos On Demand</h3>
+          <p>"Contratá solamente lo que necesitás."</p>
+          <div class="modules-grid" id="modulesGrid">
+            <div class="module-pill">Diseño de perfil</div>
+            <div class="module-pill">Reclutamiento</div>
+            <div class="module-pill">Verif. referencias</div>
+            <div class="module-pill">Exám. preocupacionales</div>
+            <div class="module-pill hidden-extra">Coord. de ingreso</div>
+            <div class="module-pill hidden-extra">Encuestas de egreso</div>
+            <div class="module-pill hidden-extra">Acompañamiento</div>
+            <button class="modules-toggle" id="modulesToggle" onclick="toggleModules()">Ver todos los módulos (+3)</button>
+            <a href="#" class="module-pill consultanos">+ Consultanos</a>
+          </div>
+        </div>
+
+        <div class="service-card featured">
+          <div class="service-badge navy">Consultoría</div>
+          <h3>Consultoría en capital humano</h3>
+          <p>"Te ayudamos a ordenar, mejorar y profesionalizar la gestión de personas."</p>
+          <ul class="service-list">
+            <li>Asesoramiento en gestión de RRHH</li>
+            <li>Diseño y revisión de perfiles</li>
+            <li>Diagnóstico organizacional</li>
+          </ul>
+          <a href="#" class="service-cta">Consultanos →</a>
+        </div>
+      </div>
+    </section>
+    <div class="annot"><span class="note">Módulos On Demand: 8 pills colapsadas a 4 + "ver todos", evita un scroll gigante</span></div>
+
+    <!-- CUANDO -->
+    <section class="section-wrap bg-navy">
+      <div class="s-eyebrow white">¿Cuándo podemos ayudarte?</div>
+      <h2 class="s-title white">Situaciones reales que reconocés.</h2>
+      <div class="cuando-grid">
+        <div class="cuando-card"><div class="cuando-card-num">01</div><p>Necesitás incorporar una persona clave y no encontrás el perfil adecuado.</p></div>
+        <div class="cuando-card"><div class="cuando-card-num">02</div><p>Querés realizar una búsqueda especializada o confidencial.</p></div>
+        <div class="cuando-card"><div class="cuando-card-num">03</div><p>Necesitás ordenar o mejorar algún proceso de gestión de personas.</p></div>
+      </div>
+      <div class="cuando-close">
+        <p>"Contanos tu situación. Analizamos la necesidad y vemos la mejor solución."</p>
+        <a href="#" class="cuando-cta">Consultar ahora →</a>
+      </div>
+    </section>
+
+    <!-- FOOTER ACORDEÓN -->
+    <footer>
+      <img src="https://interactiva-web.vercel.app/logos/logo-interactiva-white.png" onerror="this.style.display='none'" class="footer-logo-img" alt="Interactiva" />
+      <p class="footer-desc">Consultoría y Gestión de Capital Humano. Más de 20 años acompañando empresas y organizaciones en la región.</p>
+      <div class="footer-social">
+        <div class="social-icon">in</div><div class="social-icon">fb</div><div class="social-icon">ig</div>
+      </div>
+
+      <div class="footer-accordion-item">
+        <button class="footer-accordion-trigger" onclick="toggleAccordion(this)">Servicios <span class="chev">⌄</span></button>
+        <div class="footer-accordion-panel">
+          <a href="#">Atracción de talento</a>
+          <a href="#">Módulos On Demand</a>
+          <a href="#">Consultoría en RRHH</a>
+        </div>
+      </div>
+      <div class="footer-accordion-item">
+        <button class="footer-accordion-trigger" onclick="toggleAccordion(this)">Empresa <span class="chev">⌄</span></button>
+        <div class="footer-accordion-panel">
+          <a href="#">Por qué Interactiva</a>
+          <a href="#">Blog</a>
+          <a href="#">Centro de Recursos</a>
+          <a href="#">Oportunidades laborales</a>
+        </div>
+      </div>
+      <div class="footer-accordion-item open">
+        <button class="footer-accordion-trigger" onclick="toggleAccordion(this)">Contacto <span class="chev">⌄</span></button>
+        <div class="footer-accordion-panel">
+          <span class="footer-contact-label">Empresas</span>
+          <a href="#">comercial@interactiva.com.ar</a>
+          <a href="#">WhatsApp</a>
+          <a href="#">Formulario de consulta</a>
+          <span class="footer-contact-label">Candidatos / Postulantes</span>
+          <a href="#">consultoria@interactiva.com.ar</a>
+          <a href="#">CV@interactiva.com.ar</a>
+          <a href="#">2657497391</a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">© 2026 Interactiva – Consultoría y Gestión de RRHH</div>
+    </footer>
+    <div class="annot"><span class="note">Footer: 4 bloques largos → acordeón con "Contacto" abierto por defecto</span></div>
+
+  </div>
+
+  <!-- STICKY CTA -->
+  <div class="sticky-cta">
+    <a href="#" class="wa">💬 WhatsApp</a>
+    <a href="#" class="consult">Soy empresa →</a>
+  </div>
+</div>
+
+<script>
+  function toggleAccordion(btn) {
+    const item = btn.closest('.footer-accordion-item');
+    const wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.footer-accordion-item').forEach(i => i.classList.remove('open'));
+    if (!wasOpen) item.classList.add('open');
+  }
+  function toggleModules() {
+    const grid = document.getElementById('modulesGrid');
+    const btn = document.getElementById('modulesToggle');
+    const hidden = grid.querySelectorAll('.hidden-extra');
+    const isHidden = hidden[0].style.display === 'none' || getComputedStyle(hidden[0]).display === 'none';
+    hidden.forEach(el => el.style.display = isHidden ? 'flex' : 'none');
+    btn.textContent = isHidden ? 'Ver menos' : 'Ver todos los módulos (+3)';
+  }
+</script>
+
+</body>
+</html>

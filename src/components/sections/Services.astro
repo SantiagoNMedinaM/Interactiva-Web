@@ -44,10 +44,13 @@ const modules = [
           <div class="service-badge orange">On Demand</div>
           <h3>Módulos On Demand</h3>
           <p>"Contratá solamente lo que necesitás." — Soluciones puntuales sin necesidad de contratar un servicio integral.</p>
-          <div class="modules-grid">
-            {modules.map(m => (
-              <div class="module-pill">{m}</div>
+          <div class="modules-grid" id="modules-grid">
+            {modules.map((m, i) => (
+              <div class={`module-pill ${i >= 4 ? 'hidden-extra' : ''}`} data-extra={i >= 4 ? 'true' : undefined}>{m}</div>
             ))}
+            <button type="button" class="modules-toggle" id="modules-toggle">
+              Ver todos los módulos (+{modules.length - 4})
+            </button>
             <a href="/contacto" class="module-pill consultanos">+ Consultanos</a>
           </div>
         </div>
@@ -70,3 +73,15 @@ const modules = [
     </div>
   </div>
 </section>
+
+<script>
+  const grid = document.getElementById('modules-grid')
+  const toggle = document.getElementById('modules-toggle')
+
+  toggle?.addEventListener('click', () => {
+    const extras = grid?.querySelectorAll('[data-extra]') ?? []
+    const isCollapsed = toggle.textContent?.includes('Ver todos')
+    extras.forEach(el => el.classList.toggle('hidden-extra', !isCollapsed))
+    toggle.textContent = isCollapsed ? 'Ver menos' : `Ver todos los módulos (+${extras.length})`
+  })
+</script>
