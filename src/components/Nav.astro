@@ -81,18 +81,33 @@ function isActive(href: string) {
 </div>
 
 <script>
-  const toggle = document.getElementById('nav-toggle')
-  const menu = document.getElementById('nav-mobile')
+  // Delegado en document y con guard: las transiciones de Astro (ClientRouter)
+  // pueden re-ejecutar este script sobre nodos nuevos, así que en vez de
+  // atar listeners a #nav-toggle/#nav-mobile (que se reemplazan en cada
+  // navegación), escuchamos en document -que persiste siempre- y buscamos
+  // los elementos actuales en cada click. El guard evita que se acumulen
+  // listeners duplicados en document si el script se re-ejecuta igual.
+  if (!(window as any).__navDelegated) {
+    ;(window as any).__navDelegated = true
 
-  toggle?.addEventListener('click', () => {
-    const isOpen = menu?.classList.toggle('open')
-    toggle.setAttribute('aria-expanded', String(isOpen))
-  })
+    document.addEventListener('click', (e) => {
+      const toggle = document.getElementById('nav-toggle')
+      const menu = document.getElementById('nav-mobile')
+      if (!toggle || !menu) return
 
-  document.addEventListener('click', (e) => {
-    if (!toggle?.contains(e.target as Node) && !menu?.contains(e.target as Node)) {
-      menu?.classList.remove('open')
-      toggle?.setAttribute('aria-expanded', 'false')
-    }
-  })
+      const target = e.target as Node
+
+      if (toggle.contains(target)) {
+        const isOpen = menu.classList.toggle('open')
+        toggle.setAttribute('aria-expanded', String(isOpen))
+        return
+      }
+
+      const clickedLink = menu.contains(target) && (target as HTMLElement).closest('a')
+      if (clickedLink || !menu.contains(target)) {
+        menu.classList.remove('open')
+        toggle.setAttribute('aria-expanded', 'false')
+      }
+    })
+  }
 </script>

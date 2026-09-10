@@ -43,5 +43,37 @@ const isContacto = Astro.url.pathname === '/contacto' || Astro.url.pathname.star
     </main>
     <Footer variant={footerVariant} />
     {!isContacto && <StickyMobileCta />}
+
+    <script>
+      // ClientRouter intercepta los links con hash y actualiza la URL vía
+      // history.pushState, que no dispara 'hashchange' ni el scroll nativo
+      // del navegador. Para un click a un hash de la página actual tampoco
+      // emite 'astro:page-load' (no hay contenido nuevo que swapear), así
+      // que lo manejamos directo en el click. astro:page-load y hashchange
+      // quedan como red de respaldo para el resto de los casos (carga
+      // inicial, navegación cruzada de página + hash, atrás/adelante del
+      // navegador).
+      function scrollToHash() {
+        if (!location.hash) return
+        document.querySelector(location.hash)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      }
+
+      // astro:page-load dispara antes de que ClientRouter termine de resetear
+      // el scroll al top en una navegación a página nueva; el timeout deja
+      // que eso pase primero para que nuestro scroll no quede pisado.
+      document.addEventListener('astro:page-load', () => setTimeout(scrollToHash, 50))
+      window.addEventListener('hashchange', scrollToHash)
+
+      document.addEventListener('click', (e) => {
+        const link = (e.target as HTMLElement).closest('a[href*="#"]')
+        if (!link) return
+        const url = new URL((link as HTMLAnchorElement).href)
+        if (url.pathname === location.pathname && url.hash) {
+          setTimeout(() => {
+            document.querySelector(url.hash)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+          }, 50)
+        }
+      })
+    </script>
   </body>
 </html>
