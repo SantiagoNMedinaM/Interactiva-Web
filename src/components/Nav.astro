@@ -34,9 +34,11 @@ function isActive(href: string) {
         <div class={`nav-dropdown ${link.dropdown.some(d => isActive(d.href)) ? 'active' : ''}`}>
           <span class="nav-dropdown-trigger" tabindex="0">{link.label}</span>
           <div class="nav-dropdown-menu">
-            {link.dropdown.map(d => (
-              <a href={d.href}>{d.label}</a>
-            ))}
+            <div class="nav-dropdown-menu-inner">
+              {link.dropdown.map(d => (
+                <a href={d.href}>{d.label}</a>
+              ))}
+            </div>
           </div>
         </div>
       ) : (

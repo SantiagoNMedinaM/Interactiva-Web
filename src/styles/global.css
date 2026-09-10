@@ -90,7 +90,9 @@ nav {
   position: absolute;
   top: 100%;
   left: -14px;
-  margin-top: 14px;
+  padding-top: 14px;
+}
+.nav-dropdown-menu-inner {
   background: white;
   border: 1px solid var(--border);
   border-radius: 10px;
