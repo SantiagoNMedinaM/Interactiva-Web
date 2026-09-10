@@ -1,19 +1,35 @@
 ---
+import Icon from '../Icon.astro'
+
+interface Props {
+  dark?: boolean
+  eyebrow?: string
+  title?: string
+  body?: string
+}
+
+const {
+  dark = false,
+  eyebrow = 'Centro de Recursos',
+  title = 'Herramientas para tu gestión de personas.',
+  body = 'Recursos prácticos y descargables para empresas y organizaciones. Gratis, sin compromiso.',
+} = Astro.props
+
 const recursos = [
   {
-    icon: '📋',
+    icon: 'clipboard' as const,
     title: 'Modelo de descripción de perfil / puesto',
     body: 'Definí correctamente el perfil antes de iniciar una búsqueda y mejorá los resultados.',
     href: '#'
   },
   {
-    icon: '🎤',
+    icon: 'mic' as const,
     title: 'Guía para entrevistas por competencias',
     body: 'Estructura tus entrevistas y evaluá candidatos de forma más objetiva y efectiva.',
     href: '#'
   },
   {
-    icon: '✅',
+    icon: 'check' as const,
     title: 'Checklist de incorporación de personal',
     body: 'Asegurate de cubrir todos los pasos clave en el proceso de ingreso de un colaborador.',
     href: '#'
@@ -21,19 +37,19 @@ const recursos = [
 ]
 ---
 
-<section class="section-wrap bg-light" id="recursos">
+<section class={`section-wrap ${dark ? 'bg-navy' : 'bg-light'}`} id="recursos">
   <div class="section-inner">
     <div class="two-col-header">
       <div>
-        <div class="s-eyebrow">Centro de Recursos</div>
-        <h2 class="s-title">Herramientas para tu gestión de personas.</h2>
+        <div class={`s-eyebrow ${dark ? 'white' : ''}`}>{eyebrow}</div>
+        <h2 class={`s-title ${dark ? 'white' : ''}`}>{title}</h2>
       </div>
-      <p class="s-body">Recursos prácticos y descargables para empresas y organizaciones. Gratis, sin compromiso.</p>
+      <p class={`s-body ${dark ? 'white' : ''}`}>{body}</p>
     </div>
     <div class="recursos-grid">
       {recursos.map(r => (
-        <div class="recurso-card">
-          <div class="recurso-icon">{r.icon}</div>
+        <div class={`recurso-card ${dark ? 'dark' : ''}`}>
+          <div class="recurso-icon"><Icon name={r.icon} /></div>
           <h3>{r.title}</h3>
           <p>{r.body}</p>
           <a href={r.href} class="recurso-btn">Descargar gratis →</a>

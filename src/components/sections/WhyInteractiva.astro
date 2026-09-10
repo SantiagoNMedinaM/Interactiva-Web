@@ -1,32 +1,34 @@
 ---
+import Icon from '../Icon.astro'
+
 const diferenciales = [
   {
-    icon: '🏆',
+    icon: 'trophy' as const,
     title: 'Experiencia comprobada',
     body: 'Más de 20 años en consultoría y gestión de capital humano con resultados concretos y medibles.'
   },
   {
-    icon: '🤝',
+    icon: 'heart' as const,
     title: 'Cercanía y flexibilidad',
     body: 'Nos adaptamos al tamaño y realidad de cada organización. Entendemos la necesidad antes de proponer.'
   },
   {
-    icon: '📍',
+    icon: 'pin' as const,
     title: 'Conocimiento regional',
     body: 'Conocemos el tejido empresarial de la región. Eso nos permite encontrar el talento adecuado más rápido.'
   },
   {
-    icon: '🎯',
+    icon: 'target' as const,
     title: 'Enfoque en resultados',
     body: 'Acompañamos todo el proceso, desde la identificación de la necesidad hasta la incorporación efectiva.'
   },
   {
-    icon: '🔒',
+    icon: 'lock' as const,
     title: 'Confidencialidad',
     body: 'Manejamos cada búsqueda con la discreción que cada proceso requiere, protegiendo a empresas y candidatos.'
   },
   {
-    icon: '⚡',
+    icon: 'bolt' as const,
     title: 'Agilidad operativa',
     body: 'Procesos ágiles y comunicación directa. Sin burocracia innecesaria que frene tu búsqueda.'
   },
@@ -50,7 +52,7 @@ const diferenciales = [
       {diferenciales.map(d => (
         <div class="why-card">
           <div class="why-card-accent"></div>
-          <div class="why-card-icon">{d.icon}</div>
+          <div class="why-card-icon"><Icon name={d.icon} size={28} /></div>
           <h3>{d.title}</h3>
           <p>{d.body}</p>
         </div>

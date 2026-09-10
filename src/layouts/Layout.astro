@@ -1,4 +1,5 @@
 ---
+import { ClientRouter } from 'astro:transitions'
 import Nav from '../components/Nav.astro'
 import Footer from '../components/Footer.astro'
 import '../styles/global.css'
@@ -6,11 +7,13 @@ import '../styles/global.css'
 interface Props {
   title?: string
   description?: string
+  footerVariant?: 'default' | 'inverted'
 }
 
 const {
   title = 'Interactiva — Consultoría de Capital Humano',
-  description = 'Más de 20 años acompañando a empresas y organizaciones en gestión de capital humano. Atracción de talento, consultoría en RRHH y módulos on demand.'
+  description = 'Más de 20 años acompañando a empresas y organizaciones en gestión de capital humano. Atracción de talento, consultoría en RRHH y módulos on demand.',
+  footerVariant = 'default'
 } = Astro.props
 ---
 
@@ -28,12 +31,13 @@ const {
     />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <ClientRouter />
   </head>
   <body>
     <Nav />
     <main>
       <slot />
     </main>
-    <Footer />
+    <Footer variant={footerVariant} />
   </body>
 </html>

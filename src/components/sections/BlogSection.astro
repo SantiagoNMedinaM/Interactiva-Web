@@ -1,4 +1,6 @@
 ---
+import Icon from '../Icon.astro'
+
 interface Post {
   id: number
   slug: string
@@ -17,7 +19,7 @@ interface Props {
 const { posts } = Astro.props
 
 const gradients = ['t1', 't2', 't3']
-const fallbackEmojis = ['📰', '💡', '🚀']
+const fallbackIcons = ['newspaper', 'lightbulb', 'rocket'] as const
 
 function formatDate(dateStr: string) {
   return new Date(dateStr).toLocaleDateString('es-AR', {
@@ -56,7 +58,7 @@ function getFeaturedImage(post: Post) {
             <div class={`blog-thumb ${gradients[i % 3]}`}>
               {img
                 ? <img src={img.source_url} alt={img.alt_text || post.title.rendered} loading="lazy" />
-                : <span aria-hidden="true">{fallbackEmojis[i % 3]}</span>
+                : <Icon name={fallbackIcons[i % 3]} size={32} />
               }
             </div>
             <div class="blog-body">

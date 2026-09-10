@@ -1,5 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro'
+import Icon from '../../components/Icon.astro'
 import { getAllPosts } from '../../lib/wordpress.js'
 
 const posts = await getAllPosts()
@@ -23,7 +24,7 @@ function getFeaturedImage(post: any) {
 }
 
 const gradients = ['t1', 't2', 't3']
-const fallbackEmojis = ['📰', '💡', '🚀', '📊', '🎯', '🤝']
+const fallbackIcons = ['newspaper', 'lightbulb', 'rocket', 'chart', 'target', 'heart'] as const
 ---
 
 <Layout
@@ -49,7 +50,7 @@ const fallbackEmojis = ['📰', '💡', '🚀', '📊', '🎯', '🤝']
                 <div class={`blog-thumb ${gradients[i % 3]}`}>
                   {img
                     ? <img src={img.source_url} alt={img.alt_text || post.title.rendered} loading="lazy" />
-                    : <span aria-hidden="true">{fallbackEmojis[i % fallbackEmojis.length]}</span>
+                    : <Icon name={fallbackIcons[i % fallbackIcons.length]} size={32} />
                   }
                 </div>
                 <div class="blog-body">

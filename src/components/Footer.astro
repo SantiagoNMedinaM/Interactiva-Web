@@ -1,14 +1,21 @@
 ---
+interface Props {
+  variant?: 'default' | 'inverted'
+}
+const { variant = 'default' } = Astro.props
+
 const year = new Date().getFullYear()
 const WA = import.meta.env.PUBLIC_WHATSAPP
 const waUrl = `https://wa.me/${WA}`
+const waPostulantesUrl = 'https://wa.me/5492657497391'
+const logoSrc = variant === 'inverted' ? '/logos/logo-interactiva.png' : '/logos/logo-interactiva-white.png'
 ---
 
-<footer>
+<footer class={variant === 'inverted' ? 'footer-inverted' : ''}>
   <div class="footer-inner">
     <div class="footer-top">
       <div>
-        <div class="footer-brand-name">interactiva</div>
+        <img src={logoSrc} alt="Interactiva" class="footer-logo-img" />
         <p class="footer-desc">
           Consultoría y Gestión de Capital Humano. Más de 20 años acompañando
           empresas y organizaciones en la región.
@@ -41,8 +48,10 @@ const waUrl = `https://wa.me/${WA}`
         <a href="mailto:comercial@interactiva.com.ar">comercial@interactiva.com.ar</a>
         <a href={waUrl} target="_blank" rel="noopener noreferrer">WhatsApp</a>
         <a href="/contacto">Formulario de consulta</a>
-        <span class="footer-contact-label">Para candidatos</span>
+        <span class="footer-contact-label">Candidatos / Postulantes</span>
         <a href="mailto:consultoria@interactiva.com.ar">consultoria@interactiva.com.ar</a>
+        <a href="mailto:consultoria@interactiva.com.ar">CV@interactiva.com.ar</a>
+        <a href={waPostulantesUrl} target="_blank" rel="noopener noreferrer">WhatsApp Postulantes</a>
       </div>
     </div>
 

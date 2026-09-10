@@ -10,11 +10,10 @@
   --orange: #DE912F;
   --orange-light: #E7AD47;
   --orange-dark: #B1701C;
-  --navy: #2B2B2B;
-  --navy-mid: #3D3D3D;
-  --slate: #5C5C5C;
-  --muted: #8A8A8A;
-  --grey-accent: #9C9C9C;
+  --navy: #0F1C2E;
+  --navy-mid: #1E3148;
+  --slate: #3D5166;
+  --muted: #6B7A8D;
   --light: #F7F5F2;
   --white: #FFFFFF;
   --border: #E2DDD8;
@@ -23,6 +22,9 @@
 }
 
 /* ── BASE ── */
+html {
+  scroll-behavior: smooth;
+}
 body {
   font-family: 'DM Sans', sans-serif;
   color: var(--navy);
@@ -50,21 +52,10 @@ nav {
   gap: 10px;
   text-decoration: none;
 }
-.nav-logo-icon {
-  width: 32px;
+.nav-logo-img {
   height: 32px;
-  background: linear-gradient(135deg, #E7AD47, #DE912F);
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-.nav-logo-txt {
-  font-family: 'Fraunces', serif;
-  font-size: 20px;
-  font-weight: 700;
-  color: var(--navy);
+  width: auto;
+  display: block;
 }
 .nav-links {
   display: flex;
@@ -410,9 +401,9 @@ nav {
   font-size: 20px;
   flex-shrink: 0;
 }
-.hero-card-icon.o { background: rgba(222, 145, 47, 0.2); }
-.hero-card-icon.g { background: rgba(26, 122, 94, 0.2); }
-.hero-card-icon.b { background: rgba(59, 130, 246, 0.15); }
+.hero-card-icon.o { background: rgba(222, 145, 47, 0.2); color: var(--orange); }
+.hero-card-icon.g { background: rgba(26, 122, 94, 0.2); color: var(--green); }
+.hero-card-icon.b { background: rgba(59, 130, 246, 0.15); color: #3B82F6; }
 .hero-card-ttl {
   font-size: 14px;
   font-weight: 600;
@@ -454,7 +445,7 @@ nav {
   margin-bottom: 16px;
 }
 .why-card-icon {
-  font-size: 28px;
+  color: var(--orange);
   margin-bottom: 16px;
 }
 .why-card h3 {
@@ -629,6 +620,17 @@ nav {
 .module-pill.consultanos:hover::before {
   background: white;
 }
+.service-cta {
+  margin-top: auto;
+  align-self: flex-start;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--orange);
+  text-decoration: none;
+}
+.service-cta:hover {
+  text-decoration: underline;
+}
 
 /* ── CUÁNDO PODEMOS AYUDARTE ── */
 .cuando-grid {
@@ -706,7 +708,7 @@ nav {
   gap: 12px;
 }
 .recurso-icon {
-  font-size: 24px;
+  color: var(--orange);
 }
 .recurso-card h3 {
   font-size: 14px;
@@ -730,6 +732,16 @@ nav {
 }
 .recurso-btn:hover {
   text-decoration: underline;
+}
+.recurso-card.dark {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+.recurso-card.dark h3 {
+  color: white;
+}
+.recurso-card.dark p {
+  color: rgba(255, 255, 255, 0.55);
 }
 
 /* ── OPORTUNIDADES LABORALES ── */
@@ -856,8 +868,11 @@ nav {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 36px;
+  color: var(--navy);
   overflow: hidden;
+}
+.blog-thumb svg {
+  opacity: 0.4;
 }
 .blog-thumb img {
   width: 100%;
@@ -1125,11 +1140,11 @@ footer {
   gap: 40px;
   margin-bottom: 40px;
 }
-.footer-brand-name {
-  font-family: 'Fraunces', serif;
-  font-size: 22px;
-  color: white;
-  margin-bottom: 10px;
+.footer-logo-img {
+  height: 26px;
+  width: auto;
+  display: block;
+  margin-bottom: 12px;
 }
 .footer-desc {
   font-size: 12px;
@@ -1208,6 +1223,41 @@ footer {
 .footer-bottom p {
   font-size: 11px;
   color: rgba(255, 255, 255, 0.25);
+}
+
+/* ── FOOTER INVERTIDO (solo /recursos) ── */
+footer.footer-inverted {
+  background: var(--light);
+  border-top: 1px solid var(--border);
+}
+footer.footer-inverted .footer-desc {
+  color: var(--muted);
+}
+footer.footer-inverted .social-icon {
+  background: var(--border);
+  color: var(--slate);
+}
+footer.footer-inverted .social-icon:hover {
+  background: var(--navy);
+  color: white;
+}
+footer.footer-inverted .footer-col h4 {
+  color: var(--slate);
+}
+footer.footer-inverted .footer-col a {
+  color: var(--muted);
+}
+footer.footer-inverted .footer-col a:hover {
+  color: var(--navy);
+}
+footer.footer-inverted .footer-contact-label {
+  color: var(--muted);
+}
+footer.footer-inverted .footer-bottom {
+  border-top-color: var(--border);
+}
+footer.footer-inverted .footer-bottom p {
+  color: var(--muted);
 }
 
 /* ── BLOG PAGE ── */
