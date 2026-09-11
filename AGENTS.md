@@ -45,9 +45,9 @@ El objetivo del sitio es ser una herramienta comercial **B2B** — no un portal 
 
 ```css
 :root {
-  --orange: #F07320;
-  --orange-light: #FFF3EA;
-  --orange-dark: #C25A0E;
+  --orange: #DE912F;
+  --orange-light: #E7AD47;
+  --orange-dark: #B1701C;
   --navy: #0F1C2E;
   --navy-mid: #1E3148;
   --slate: #3D5166;
@@ -59,6 +59,11 @@ El objetivo del sitio es ser una herramienta comercial **B2B** — no un portal 
   --green-light: #EAF7F2;
 }
 ```
+
+**Notas:**
+- Se decidió mantener el azul original del sitio (navy/slate/muted) en vez de migrarlo a gris; solo se actualizó el naranja.
+- Ya existen logos reales del cliente en `public/logos/` (`logo-interactiva.png`, `logo-interactiva-white.png`, `logo-interactiva-icon.png`).
+- `/recursos` fue rediseñado como un único contenedor con fondo unificado navy (`dark`) y footer invertido (`footerVariant="inverted"`).
 
 ## Tipografía
 
