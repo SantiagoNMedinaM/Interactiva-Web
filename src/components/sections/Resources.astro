@@ -1,11 +1,18 @@
 ---
 import Icon from '../Icon.astro'
 
+interface Resource {
+  title: string
+  body: string
+  href: string
+}
+
 interface Props {
   dark?: boolean
   eyebrow?: string
   title?: string
   body?: string
+  resources?: Resource[]
 }
 
 const {
@@ -13,9 +20,10 @@ const {
   eyebrow = 'Centro de Recursos',
   title = 'Herramientas para tu gestión de personas.',
   body = 'Recursos prácticos y descargables para empresas y organizaciones. Gratis, sin compromiso.',
+  resources,
 } = Astro.props
 
-const recursos = [
+const fallbackRecursos = [
   {
     icon: 'clipboard' as const,
     title: 'Modelo de descripción de perfil / puesto',
@@ -35,6 +43,17 @@ const recursos = [
     href: '#'
   },
 ]
+
+interface RecursoCard {
+  icon: 'clipboard' | 'mic' | 'check' | 'download'
+  title: string
+  body: string
+  href: string
+}
+
+const recursos: RecursoCard[] = resources && resources.length > 0
+  ? resources.map((r: Resource) => ({ ...r, icon: 'download' as const }))
+  : fallbackRecursos
 ---
 
 <section class={`section-wrap ${dark ? 'bg-navy' : 'bg-light'}`} id="recursos">
@@ -52,7 +71,7 @@ const recursos = [
           <div class="recurso-icon"><Icon name={r.icon} /></div>
           <h3>{r.title}</h3>
           <p>{r.body}</p>
-          <a href={r.href} class="recurso-btn">Descargar gratis →</a>
+          <a href={r.href} class="recurso-btn" target="_blank" rel="noopener noreferrer">Descargar gratis →</a>
         </div>
       ))}
     </div>

@@ -1,6 +1,9 @@
 ---
 import Layout from '../layouts/Layout.astro'
 import Resources from '../components/sections/Resources.astro'
+import { getResources } from '../lib/wordpress.js'
+
+const resources = await getResources()
 ---
 
 <Layout
@@ -13,5 +16,6 @@ import Resources from '../components/sections/Resources.astro'
     eyebrow="Centro de Recursos"
     title="Recursos para potenciar tu gestión de personas."
     body="Guías, checklists y modelos descargables, gratis y sin compromiso, pensados para empresas y organizaciones que quieren profesionalizar la gestión de personas."
+    resources={resources}
   />
 </Layout>

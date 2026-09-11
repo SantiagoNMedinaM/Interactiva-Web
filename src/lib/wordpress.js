@@ -30,3 +30,37 @@ export async function getAllPosts() {
     return []
   }
 }
+
+function stripHtml(html = '') {
+  return html.replace(/<[^>]*>/g, '').trim()
+}
+
+async function resolveFileUrl(archivo) {
+  if (typeof archivo === 'string') return archivo
+  if (typeof archivo === 'number') {
+    try {
+      const res = await fetch(`${WP_API}/media/${archivo}`)
+      if (!res.ok) return '#'
+      const media = await res.json()
+      return media.source_url ?? '#'
+    } catch {
+      return '#'
+    }
+  }
+  return '#'
+}
+
+export async function getResources(count = 20) {
+  try {
+    const res = await fetch(`${WP_API}/recursos?per_page=${count}&_embed`)
+    if (!res.ok) return []
+    const items = await res.json()
+    return Promise.all(items.map(async item => ({
+      title: stripHtml(item.title?.rendered),
+      body: stripHtml(item.content?.rendered),
+      href: await resolveFileUrl(item.acf?.archivo),
+    })))
+  } catch {
+    return []
+  }
+}

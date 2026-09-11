@@ -10,12 +10,13 @@ import BlogSection from '../components/sections/BlogSection.astro'
 import Jobs from '../components/sections/Jobs.astro'
 import MiCurriculumSection from '../components/sections/MiCurriculumSection.astro'
 import ContactForm from '../components/sections/ContactForm.astro'
-import { getLatestPosts } from '../lib/wordpress.js'
+import { getLatestPosts, getResources } from '../lib/wordpress.js'
 import { getLatestJobs } from '../lib/micurriculum.js'
 
-const [posts, jobs] = await Promise.all([
+const [posts, jobs, resources] = await Promise.all([
   getLatestPosts(3),
   getLatestJobs(3),
+  getResources(3),
 ])
 ---
 
@@ -28,7 +29,7 @@ const [posts, jobs] = await Promise.all([
   <AboutUs />
   <Services />
   <WhenWeHelp />
-  <Resources />
+  <Resources resources={resources} />
   <BlogSection posts={posts} />
   <Jobs jobs={jobs} headerLink={{ href: '/oportunidades', label: 'Ver todas las oportunidades →' }} />
   <MiCurriculumSection />
