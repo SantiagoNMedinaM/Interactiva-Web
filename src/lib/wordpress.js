@@ -53,18 +53,14 @@ async function resolveFileUrl(archivo) {
 export async function getResources(count = 20) {
   try {
     const res = await fetch(`${WP_API}/recursos?per_page=${count}&_embed`)
-    if (!res.ok) {
-      console.error(`getResources: WP respondió ${res.status} ${res.statusText}`)
-      return []
-    }
+    if (!res.ok) return []
     const items = await res.json()
     return Promise.all(items.map(async item => ({
       title: stripHtml(item.title?.rendered),
       body: stripHtml(item.content?.rendered),
       href: await resolveFileUrl(item.acf?.archivo),
     })))
-  } catch (err) {
-    console.error('getResources: fetch falló', err)
+  } catch {
     return []
   }
 }
