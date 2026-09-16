@@ -16,7 +16,7 @@ import { getLatestJobs } from '../lib/micurriculum.js'
 const [posts, jobs, resources] = await Promise.all([
   getLatestPosts(3),
   getLatestJobs(3),
-  getResources(3),
+  getResources(),
 ])
 ---
 

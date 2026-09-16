@@ -65,15 +65,90 @@ const recursos: RecursoCard[] = resources && resources.length > 0
       </div>
       <p class={`s-body ${dark ? 'white' : ''}`}>{body}</p>
     </div>
-    <div class="recursos-grid">
-      {recursos.map(r => (
-        <div class={`recurso-card ${dark ? 'dark' : ''}`}>
-          <div class="recurso-icon"><Icon name={r.icon} /></div>
-          <h3>{r.title}</h3>
-          <p>{r.body}</p>
-          <a href={r.href} class="recurso-btn" target="_blank" rel="noopener noreferrer">Descargar gratis →</a>
-        </div>
-      ))}
+    <div class={`recursos-carousel ${dark ? 'dark' : ''}`}>
+      <button type="button" class="recursos-nav-btn prev" aria-label="Ver recursos anteriores">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+      </button>
+      <div class="recursos-track">
+        {recursos.map(r => (
+          <div class={`recurso-card ${dark ? 'dark' : ''}`}>
+            <div class="recurso-icon"><Icon name={r.icon} /></div>
+            <h3>{r.title}</h3>
+            <p>{r.body}</p>
+            <a href={r.href} class="recurso-btn" target="_blank" rel="noopener noreferrer">Descargar gratis →</a>
+          </div>
+        ))}
+      </div>
+      <button type="button" class="recursos-nav-btn next" aria-label="Ver más recursos">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+      </button>
     </div>
+    <div class="recursos-dots"></div>
   </div>
 </section>
+
+<script>
+  function initRecursosCarousel(carousel: HTMLElement) {
+    const track = carousel.querySelector<HTMLElement>('.recursos-track')
+    const prevBtn = carousel.querySelector<HTMLButtonElement>('.recursos-nav-btn.prev')
+    const nextBtn = carousel.querySelector<HTMLButtonElement>('.recursos-nav-btn.next')
+    const dotsWrap = carousel.parentElement?.querySelector<HTMLElement>('.recursos-dots')
+    if (!track || !prevBtn || !nextBtn) return
+
+    let pages = 1
+
+    function buildDots() {
+      if (!dotsWrap) return
+      pages = Math.max(1, Math.ceil((track!.scrollWidth - 4) / track!.clientWidth))
+      dotsWrap.innerHTML = ''
+      if (pages <= 1) return
+      for (let i = 0; i < pages; i++) {
+        const dot = document.createElement('span')
+        if (i === 0) dot.classList.add('active')
+        dot.addEventListener('click', () => {
+          const maxScroll = track!.scrollWidth - track!.clientWidth
+          track!.scrollTo({ left: Math.min(i * track!.clientWidth, maxScroll), behavior: 'smooth' })
+        })
+        dotsWrap.appendChild(dot)
+      }
+    }
+
+    function updateUI() {
+      const maxScroll = track!.scrollWidth - track!.clientWidth
+      const scrollable = maxScroll > 4
+      carousel.classList.toggle('no-nav', !scrollable)
+      prevBtn!.disabled = track!.scrollLeft <= 4
+      nextBtn!.disabled = track!.scrollLeft >= maxScroll - 4
+      if (dotsWrap && pages > 1) {
+        const active = track!.scrollLeft <= 4
+          ? 0
+          : track!.scrollLeft >= maxScroll - 4
+            ? pages - 1
+            : Math.round(track!.scrollLeft / track!.clientWidth)
+        Array.from(dotsWrap.children).forEach((dot, i) => dot.classList.toggle('active', i === active))
+      }
+    }
+
+    prevBtn.addEventListener('click', () => {
+      track!.scrollBy({ left: -track!.clientWidth, behavior: 'smooth' })
+    })
+    nextBtn.addEventListener('click', () => {
+      track!.scrollBy({ left: track!.clientWidth, behavior: 'smooth' })
+    })
+    track.addEventListener('scroll', updateUI, { passive: true })
+
+    let resizeTimer: ReturnType<typeof setTimeout>
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer)
+      resizeTimer = setTimeout(() => {
+        buildDots()
+        updateUI()
+      }, 150)
+    })
+
+    buildDots()
+    updateUI()
+  }
+
+  document.querySelectorAll<HTMLElement>('.recursos-carousel').forEach(initRecursosCarousel)
+</script>
