@@ -88,6 +88,17 @@ const recursos: RecursoCard[] = resources && resources.length > 0
 </section>
 
 <script>
+  // Este componente se usa tanto en Home como en /recursos, y el layout usa
+  // ClientRouter (View Transitions): Astro solo ejecuta un script inline una
+  // vez por sesión de navegación SPA, así que si el carrusel ya corrió en
+  // una página, no se reinicializa al navegar a otra que lo vuelve a
+  // renderizar. astro:page-load corre en la carga inicial y en cada
+  // navegación del router, así que garantiza que el carrusel de la página
+  // actual siempre quede inicializado.
+  document.addEventListener('astro:page-load', () => {
+    document.querySelectorAll<HTMLElement>('.recursos-carousel').forEach(initRecursosCarousel)
+  })
+
   function initRecursosCarousel(carousel: HTMLElement) {
     const track = carousel.querySelector<HTMLElement>('.recursos-track')
     const prevBtn = carousel.querySelector<HTMLButtonElement>('.recursos-nav-btn.prev')
@@ -138,13 +149,18 @@ const recursos: RecursoCard[] = resources && resources.length > 0
     track.addEventListener('scroll', updateUI, { passive: true })
 
     let resizeTimer: ReturnType<typeof setTimeout>
+    const controller = new AbortController()
     window.addEventListener('resize', () => {
       clearTimeout(resizeTimer)
       resizeTimer = setTimeout(() => {
         buildDots()
         updateUI()
       }, 150)
-    })
+    }, { signal: controller.signal })
+    // window persiste entre navegaciones del ClientRouter; sin esto, cada
+    // vez que se reinicializa el carrusel en una página nueva quedaría un
+    // listener de resize apuntando a un track ya desmontado.
+    document.addEventListener('astro:before-swap', () => controller.abort(), { once: true })
 
     buildDots()
     updateUI()
