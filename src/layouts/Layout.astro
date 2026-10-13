@@ -22,6 +22,8 @@ const isContacto = Astro.url.pathname === '/contacto' || Astro.url.pathname.star
 // Solo producción real: no en `astro dev` (PROD=false) ni en previews de
 // Vercel de ramas que no sean la de producción (VERCEL_ENV !== 'production').
 const gaEnabled = import.meta.env.PROD && (process.env.VERCEL_ENV ?? 'production') === 'production'
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 ---
 
 <!doctype html>
@@ -62,6 +64,7 @@ const gaEnabled = import.meta.env.PROD && (process.env.VERCEL_ENV ?? 'production
     />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
     <ClientRouter />
   </head>
   <body class={isContacto ? '' : 'has-sticky-cta'}>
