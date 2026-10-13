@@ -18,11 +18,40 @@ const {
 } = Astro.props
 
 const isContacto = Astro.url.pathname === '/contacto' || Astro.url.pathname.startsWith('/contacto/')
+
+// Solo producción real: no en `astro dev` (PROD=false) ni en previews de
+// Vercel de ramas que no sean la de producción (VERCEL_ENV !== 'production').
+const gaEnabled = import.meta.env.PROD && (process.env.VERCEL_ENV ?? 'production') === 'production'
 ---
 
 <!doctype html>
 <html lang="es">
   <head>
+    {gaEnabled && (
+      <>
+        {/* Google tag (gtag.js) */}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-08F8YYJCQM"></script>
+        <script>
+          const w = window as typeof window & { dataLayer: unknown[] }
+          w.dataLayer = w.dataLayer || []
+          function gtag(...args: unknown[]) {
+            w.dataLayer.push(args)
+          }
+          gtag('js', new Date())
+          // send_page_view desactivado: con ClientRouter disparamos el
+          // page_view manualmente en cada astro:page-load (incluida la carga
+          // inicial) para no duplicar el evento de la primera página.
+          gtag('config', 'G-08F8YYJCQM', { send_page_view: false })
+
+          document.addEventListener('astro:page-load', () => {
+            gtag('event', 'page_view', {
+              page_location: location.href,
+              page_title: document.title
+            })
+          })
+        </script>
+      </>
+    )}
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/jpeg" href="/favicon.jpg" />
